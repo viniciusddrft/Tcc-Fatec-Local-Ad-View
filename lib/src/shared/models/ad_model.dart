@@ -1,27 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AdModel {
-  final bool isImage, isVideo;
-  final bool? isImageSmall;
+  final bool isImage;
+  final bool? hasImageSecondary;
   final String creator, path;
+  final String? imageSecondary;
   final int screenTime;
   final Timestamp date;
 
-  AdModel(
+  bool get isVideo => !isImage;
+
+  const AdModel(
       {required this.creator,
       required this.isImage,
-      required this.isImageSmall,
-      required this.isVideo,
+      required this.hasImageSecondary,
       required this.screenTime,
       required this.path,
-      required this.date})
-      : assert(isImage != isVideo);
+      required this.imageSecondary,
+      required this.date});
 
   factory AdModel.fromJson(Map<String, dynamic> json) => AdModel(
       creator: json['creator'],
       isImage: json['isImage'],
-      isImageSmall: json['isImageSmall'],
-      isVideo: json['isVideo'],
+      hasImageSecondary: json['hasImageSecondary'],
+      imageSecondary: json['imageSecondary'],
       path: json['path'],
       date: json['date'],
       screenTime: json['screenTime']);
@@ -29,9 +31,9 @@ class AdModel {
   Map<String, dynamic> toJson() => {
         'creator': creator,
         'isImage': isImage,
-        'isImageSmall': isImageSmall,
-        'isVideo': isVideo,
+        'hasImageSecondary': hasImageSecondary,
         'path': path,
         'screenTime': screenTime,
+        'imageSecondary': imageSecondary
       };
 }

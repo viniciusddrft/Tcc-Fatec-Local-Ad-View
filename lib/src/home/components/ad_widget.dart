@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:local_ad_view/src/home/home_controller.dart';
-import 'package:local_ad_view/src/shared/models/ad_model.dart';
+
+import 'components/image_ad.dart';
+import 'components/image_small.dart';
+import 'components/video_ad.dart';
 
 class AdWidget extends StatefulWidget {
   const AdWidget({super.key, required this.homeController});
@@ -14,6 +17,19 @@ class AdWidget extends StatefulWidget {
 class _AdWidgetState extends State<AdWidget> {
   final PageController _pageController = PageController();
 
+  void _loop() {
+    if (_pageController.page!.toInt() + 1 !=
+        widget.homeController.ads!.length) {
+      _pageController.nextPage(
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.decelerate);
+    } else {
+      _pageController.animateToPage(0,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.decelerate);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,24 +38,19 @@ class _AdWidgetState extends State<AdWidget> {
         children: [
           for (int i = 0; i != widget.homeController.ads!.length; i++)
             widget.homeController.ads![i].isImage
-                ? widget.homeController.ads![i].isImageSmall!
-                    ? const Text('Em breve')
-                    : ImageAd(
+                ? widget.homeController.ads![i].hasImageSecondary!
+                    ? DoubleImageAdWidget(
                         adModel: widget.homeController.ads![i],
-                        voidCallback: () {
-                          if (_pageController.page!.toInt() + 1 !=
-                              widget.homeController.ads!.length) {
-                            _pageController.nextPage(
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.decelerate);
-                          } else {
-                            _pageController.animateToPage(0,
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.decelerate);
-                          }
-                        },
+                        voidCallback: _loop,
                       )
-                : const Text('Em breve')
+                    : ImageAdWidget(
+                        adModel: widget.homeController.ads![i],
+                        voidCallback: _loop,
+                      )
+                : VideoAdWidget(
+                    adModel: widget.homeController.ads![i],
+                    voidCallback: _loop,
+                  )
         ],
       ),
     );
@@ -49,18 +60,5 @@ class _AdWidgetState extends State<AdWidget> {
   void dispose() {
     _pageController.dispose();
     super.dispose();
-  }
-}
-
-class ImageAd extends StatelessWidget {
-  const ImageAd({super.key, required this.adModel, required this.voidCallback});
-
-  final AdModel adModel;
-  final VoidCallback voidCallback;
-
-  @override
-  Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: adModel.screenTime), (voidCallback));
-    return Image.network(adModel.path);
   }
 }

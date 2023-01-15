@@ -13,9 +13,11 @@ class DoubleImageAdWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: adModel.screenTime), (voidCallback));
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Image.network(adModel.path),
-        Image.network(adModel.imageSecondary!)
+        Expanded(child: Image.network(adModel.path, fit: BoxFit.contain)),
+        Expanded(
+            child: Image.network(adModel.imageSecondary!, fit: BoxFit.contain))
       ],
     );
   }

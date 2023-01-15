@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:local_ad_view/src/home/home_controller.dart';
 
 import 'components/image_ad.dart';
-import 'components/image_small.dart';
+import 'components/image_double_ad.dart';
 import 'components/video_ad.dart';
 
 class AdWidget extends StatefulWidget {

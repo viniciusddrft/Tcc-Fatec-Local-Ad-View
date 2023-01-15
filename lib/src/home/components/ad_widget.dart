@@ -15,29 +15,6 @@ class _AdWidgetState extends State<AdWidget> {
   final PageController _pageController = PageController();
 
   @override
-  void initState() {
-    _pageController.addListener(() {
-      for (int i = 0; i > widget.homeController.ads!.length; i++) {
-        Future.delayed(
-            Duration(seconds: widget.homeController.ads![i].screenTime), () {
-          if (widget.homeController.ads!.length > 1) {
-            if (i < widget.homeController.ads!.length) {
-              _pageController.animateToPage(++i,
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeInOutCubicEmphasized);
-            } else {
-              _pageController.animateToPage(0,
-                  duration: const Duration(milliseconds: 500),
-                  curve: Curves.easeInOutCubicEmphasized);
-            }
-          }
-        });
-      }
-    });
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
@@ -49,6 +26,18 @@ class _AdWidgetState extends State<AdWidget> {
                     ? const Text('Em breve')
                     : ImageAd(
                         adModel: widget.homeController.ads![i],
+                        voidCallback: () {
+                          if (_pageController.page!.toInt() + 1 !=
+                              widget.homeController.ads!.length) {
+                            _pageController.nextPage(
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.decelerate);
+                          } else {
+                            _pageController.animateToPage(0,
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.decelerate);
+                          }
+                        },
                       )
                 : const Text('Em breve')
         ],
@@ -64,12 +53,14 @@ class _AdWidgetState extends State<AdWidget> {
 }
 
 class ImageAd extends StatelessWidget {
-  const ImageAd({super.key, required this.adModel});
+  const ImageAd({super.key, required this.adModel, required this.voidCallback});
 
   final AdModel adModel;
+  final VoidCallback voidCallback;
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: adModel.screenTime), (voidCallback));
     return Image.network(adModel.path);
   }
 }

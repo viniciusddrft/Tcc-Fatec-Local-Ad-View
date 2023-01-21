@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class DashboardWeb extends StatefulWidget {
   const DashboardWeb({super.key});
@@ -8,130 +9,77 @@ class DashboardWeb extends StatefulWidget {
 }
 
 class _DashboardWebState extends State<DashboardWeb> {
+  final PageController _pageController = PageController();
+  final ValueNotifier<bool> _isImage = ValueNotifier<bool>(true);
+
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fatec Avisos dashboard'),
+        title: const Text('dashboard'),
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
-      body: SizedBox(
-        height: size.height,
-        width: size.width,
-        child: Form(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: Padding(
+        padding: const EdgeInsets.only(bottom: 80),
+        child: ValueListenableBuilder(
+          valueListenable: _isImage,
+          builder: (BuildContext context, value, Widget? child) => PageView(
+            controller: _pageController,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Column(
-                    children: [
-                      SizedBox(
-                        width: size.width * 0.3,
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                            labelText: 'Titulo do anuncio',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(20),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: size.height * 0.1),
-                        child: SizedBox(
-                          width: size.width * 0.3,
-                          child: TextFormField(
-                            decoration: const InputDecoration(
-                              labelText: 'Texto do anuncio',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(20),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 300,
-                    width: 300,
-                    child: Card(
-                      color: Colors.grey.shade400,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            child: SizedBox(
-                              width: size.width * 0.15,
-                              height: size.height * 0.06,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: const Center(
-                                  child: Text('Adicionar Images'),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const Spacer(),
-                          Flexible(
-                            child: SizedBox(
-                              width: size.width * 0.15,
-                              height: size.height * 0.06,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                ),
-                                onPressed: () {},
-                                child: const Center(
-                                  child: Text('Adicionar Videos'),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _isImage.value = true;
+                        _pageController.nextPage(
+                            duration: const Duration(milliseconds: 350),
+                            curve: Curves.decelerate);
+                      },
+                      child: const Text('Image'),
                     ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      _isImage.value = false;
+                      _pageController.nextPage(
+                          duration: const Duration(milliseconds: 350),
+                          curve: Curves.decelerate);
+                    },
+                    child: const Text('Video'),
                   )
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.only(top: size.height * 0.2),
-                child: SizedBox(
-                  width: size.width * 0.3,
-                  height: size.height * 0.06,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                    ),
-                    onPressed: () {},
-                    child: const Center(
-                      child: Text('Publicar'),
-                    ),
-                  ),
-                ),
-              )
+              _isImage.value
+                  ? const Text('Subir image')
+                  : const Text('Subir video')
             ],
           ),
         ),
       ),
+      bottomSheet: SizedBox(
+        height: 80,
+        child: Center(
+          child: SmoothPageIndicator(
+            onDotClicked: null,
+            controller: _pageController,
+            count: 2,
+            effect: const WormEffect(
+              activeDotColor: Colors.red,
+            ),
+          ),
+        ),
+      ),
     );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    _isImage.dispose();
+    super.dispose();
   }
 }

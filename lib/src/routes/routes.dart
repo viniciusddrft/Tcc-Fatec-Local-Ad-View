@@ -11,29 +11,14 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const MyHomePage(),
         );
-
       case '/adminLocalAdView':
         return MaterialPageRoute(
           builder: (BuildContext context) => const AdminPage(),
         );
       case '/dashboard':
-        final arguments = routeSettings.arguments as Map<String, bool>;
-
-        if (arguments['isWeb'] == true) {
-          return MaterialPageRoute(
-            builder: (BuildContext context) => const DasboardPage.web(),
-          );
-        } else if (arguments['isAndroid'] == true) {
-          return MaterialPageRoute(
-            builder: (BuildContext context) => const DasboardPage.android(),
-          );
-        } else if (arguments['isIos'] == true) {
-          return MaterialPageRoute(
-            builder: (BuildContext context) => const DasboardPage.ios(),
-          );
-        } else {
-          throw Exception(['Argumentos inválidos']);
-        }
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const DasboardPage(),
+        );
 
       default:
         return null;

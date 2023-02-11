@@ -23,7 +23,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late PlatformType type;
+  late final PlatformType type;
 
   @override
   void initState() {
@@ -39,8 +39,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    kIsWeb;
-
     return PlataformModel(
       type: type,
       child: MaterialApp(

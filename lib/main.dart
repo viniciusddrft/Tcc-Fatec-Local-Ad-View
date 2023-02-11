@@ -9,9 +9,11 @@ import 'src/routes/routes.dart';
 import 'firebase_options.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
@@ -44,6 +46,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         title: 'Fatec avisos',
         theme: ThemeData(
+          useMaterial3: true,
           primarySwatch: Colors.red,
         ),
         onGenerateRoute: Routes.manageRoutes,

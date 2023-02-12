@@ -14,7 +14,7 @@ class _LoginWebState extends State<LoginWeb> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sistema de avisos Fatec'),
+        title: const Text('Login'),
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
@@ -32,7 +32,7 @@ class _LoginWebState extends State<LoginWeb> {
                     labelText: 'Nome de usuario',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
-                        Radius.circular(20),
+                        Radius.circular(30),
                       ),
                     ),
                   ),
@@ -47,7 +47,7 @@ class _LoginWebState extends State<LoginWeb> {
                       labelText: 'Senha',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
-                          Radius.circular(20),
+                          Radius.circular(30),
                         ),
                       ),
                     ),
@@ -73,7 +73,10 @@ class _LoginWebState extends State<LoginWeb> {
                           'isIos': false,
                         }),
                     child: const Center(
-                      child: Text('Entrar'),
+                      child: Text(
+                        'Entrar',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_ad_view/src/admin/onboarding_ad/onboarding_ad_page.dart';
 
 import '../admin/admin_page.dart';
 import '../admin/dashboard/dashboard_page.dart';
@@ -19,7 +20,10 @@ class Routes {
         return MaterialPageRoute(
           builder: (BuildContext context) => const DasboardPage(),
         );
-
+      case '/onboarding':
+        return MaterialPageRoute(
+          builder: (BuildContext context) => const OnboardingAdPage(),
+        );
       default:
         return null;
     }

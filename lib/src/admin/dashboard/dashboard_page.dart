@@ -5,14 +5,9 @@ import 'dashboard_ios.dart';
 import 'dashboard_web.dart';
 import 'dashboard_android.dart';
 
-class DasboardPage extends StatefulWidget {
+class DasboardPage extends StatelessWidget {
   const DasboardPage({super.key});
 
-  @override
-  State<DasboardPage> createState() => _BasboardPageState();
-}
-
-class _BasboardPageState extends State<DasboardPage> {
   @override
   Widget build(BuildContext context) {
     if (PlataformModel.of(context).type == PlatformType.web) {

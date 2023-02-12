@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'src/context/platform_run.dart';
 import 'src/routes/routes.dart';
 import 'firebase_options.dart';
+import 'src/shared/theme/themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,35 +45,7 @@ class _MyAppState extends State<MyApp> {
     return PlataformModel(
       type: type,
       child: MaterialApp(
-        theme: ThemeData(
-          useMaterial3: true,
-          brightness: Brightness.light,
-          appBarTheme: const AppBarTheme(
-            titleTextStyle: TextStyle(color: Colors.white, fontSize: 30),
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              textStyle: const TextStyle(fontSize: 20),
-            ),
-          ),
-          colorScheme: const ColorScheme(
-            background: Color(0xfffbfbfb),
-            brightness: Brightness.light,
-            error: Colors.deepPurple,
-            onBackground: Colors.black,
-            onError: Colors.deepPurple,
-            onPrimary: Colors.deepPurple,
-            onSecondary: Colors.deepPurple,
-            onSurface: Colors.black,
-            primary: Colors.black,
-            secondary: Colors.deepPurple,
-            surface: Colors.deepPurple,
-            primaryContainer: Colors.white,
-          ),
-        ),
+        theme: lightTheme,
         onGenerateRoute: Routes.manageRoutes,
         debugShowCheckedModeBanner: false,
         initialRoute: kIsWeb ? '/home' : '/adminLocalAdView',

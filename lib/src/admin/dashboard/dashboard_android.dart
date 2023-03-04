@@ -21,7 +21,7 @@ class _DashboardAndroidState extends State<DashboardAndroid> {
           child: Column(
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () => Navigator.pushNamed(context, '/onboarding'),
                 child: FractionallySizedBox(
                   widthFactor: 0.7,
                   child: Row(
@@ -29,11 +29,9 @@ class _DashboardAndroidState extends State<DashboardAndroid> {
                     children: const [
                       Text(
                         'Adicionar publicação',
-                        style: TextStyle(color: Colors.white),
                       ),
                       Icon(
                         Icons.add,
-                        color: Colors.white,
                       ),
                     ],
                   ),

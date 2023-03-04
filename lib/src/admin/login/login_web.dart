@@ -60,22 +60,11 @@ class _LoginWebState extends State<LoginWeb> {
                   width: size.width * 0.3,
                   height: size.height * 0.06,
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                    ),
-                    onPressed: () => Navigator.pushReplacementNamed(
-                        context, '/dashboard',
-                        arguments: <String, bool>{
-                          'isWeb': true,
-                          'isAndroid': false,
-                          'isIos': false,
-                        }),
+                    onPressed: () =>
+                        Navigator.pushReplacementNamed(context, '/dashboard'),
                     child: const Center(
                       child: Text(
                         'Entrar',
-                        style: TextStyle(color: Colors.white),
                       ),
                     ),
                   ),

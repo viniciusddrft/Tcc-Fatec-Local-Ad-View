@@ -46,24 +46,14 @@ class _LoginAdnroidState extends State<LoginAdnroid> {
                   ),
                 ),
                 SizedBox(
-                  width: 200,
+                  width: 250,
+                  height: 50,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(
-                        context,
-                        '/dashboard',
-                        arguments: {
-                          'isAndroid': true,
-                          'isWeb': false,
-                          'isIos': false
-                        },
-                      );
+                      Navigator.pushReplacementNamed(context, '/dashboard');
                     },
                     child: const Center(
-                      child: Text(
-                        'Entrar',
-                        style: TextStyle(color: Colors.white),
-                      ),
+                      child: Text('Entrar'),
                     ),
                   ),
                 ),

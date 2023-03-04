@@ -32,11 +32,9 @@ class _DashboardWebState extends State<DashboardWeb> {
                     children: const [
                       Text(
                         'Adicionar publicação',
-                        style: TextStyle(color: Colors.white),
                       ),
                       Icon(
                         Icons.add,
-                        color: Colors.white,
                       ),
                     ],
                   ),

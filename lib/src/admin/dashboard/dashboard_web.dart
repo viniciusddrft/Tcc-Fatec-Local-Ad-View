@@ -24,7 +24,7 @@ class _DashboardWebState extends State<DashboardWeb> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () => Navigator.pushNamed(context, '/onboarding'),
                 child: FractionallySizedBox(
                   widthFactor: 0.3,
                   child: Row(

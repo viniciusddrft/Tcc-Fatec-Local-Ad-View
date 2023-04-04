@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:local_ad_view/src/admin/onboarding_ad/onboarding_ad_controller.dart';
 
 class OnboardingAdAndroid extends StatefulWidget {
   const OnboardingAdAndroid({super.key});
@@ -9,8 +10,8 @@ class OnboardingAdAndroid extends StatefulWidget {
 }
 
 class _OnboardingAdAndroidState extends State<OnboardingAdAndroid> {
-  final PageController _pageController = PageController();
-
+  final _pageController = PageController();
+  final onboardingAdController = OnboardingAdController();
   late final FilePickerResult? files;
 
   @override
@@ -32,42 +33,45 @@ class _OnboardingAdAndroidState extends State<OnboardingAdAndroid> {
                 Padding(
                   padding: const EdgeInsets.only(top: 50),
                   child: ElevatedButton(
-                      onPressed: () async {
-                        files = await FilePicker.platform.pickFiles(
-                          type: FileType.image,
-                          allowMultiple: false,
-                        );
-                        _pageController.nextPage(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.elasticOut);
-                      },
-                      child: const Text('Imagem')),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        await FilePicker.platform.pickFiles(
-                          type: FileType.image,
-                          allowMultiple: true,
-                        );
-                        _pageController.nextPage(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.elasticOut);
-                      },
-                      child: const Text('Duas imagens')),
-                ),
-                ElevatedButton(
                     onPressed: () async {
                       files = await FilePicker.platform.pickFiles(
-                        type: FileType.video,
+                        type: FileType.image,
                         allowMultiple: false,
                       );
                       _pageController.nextPage(
                           duration: const Duration(milliseconds: 500),
                           curve: Curves.elasticOut);
                     },
-                    child: const Text('Video')),
+                    child: const Text('Imagem'),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      await FilePicker.platform.pickFiles(
+                        type: FileType.image,
+                        allowMultiple: true,
+                      );
+                      _pageController.nextPage(
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.elasticOut);
+                    },
+                    child: const Text('Duas imagens'),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
+                    files = await FilePicker.platform.pickFiles(
+                      type: FileType.video,
+                      allowMultiple: false,
+                    );
+                    _pageController.nextPage(
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.elasticOut);
+                  },
+                  child: const Text('Video'),
+                ),
               ],
             ),
           ),
@@ -94,7 +98,13 @@ class _OnboardingAdAndroidState extends State<OnboardingAdAndroid> {
                   padding: const EdgeInsets.only(top: 30),
                   child: ElevatedButton.icon(
                     label: const Text('Enviar'),
-                    onPressed: () {},
+                    onPressed: () {
+                      if (files != null) {
+                        onboardingAdController.addAdImage(
+                          files!,
+                        );
+                      }
+                    },
                     icon: const Icon(Icons.file_upload_outlined),
                   ),
                 ),

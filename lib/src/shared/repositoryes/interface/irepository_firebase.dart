@@ -4,12 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../models/ad_model.dart';
 
-abstract class IRepositoryFirebase {
+abstract interface class IRepositoryFirebase {
   abstract final CollectionReference<AdModel> ads;
 
-  Future addAdImage({required File file, required int screenTime});
-  Future addAdDoubleImage({required File files, required int screenTime});
-  Future addAdVideo({required File file, required int screenTime});
-
-  Future cleanFirebase();
+  Future<void> addAdImage({required File file, required int screenTime});
+  Future<void> addAdDoubleImage({required File files, required int screenTime});
+  Future<void> addAdVideo({required File file, required int screenTime});
+  Future<void> cleanFirebase();
 }

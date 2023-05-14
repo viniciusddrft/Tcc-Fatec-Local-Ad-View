@@ -21,7 +21,6 @@ class RepositoryFirebase implements IRepositoryFirebase {
   Future<void> addAdImage({required File file, required int screenTime}) async {
     final imagesRef = storage.ref('images');
     await imagesRef.putFile(file);
-
     ads.add(
       AdModel(
         creator: '',

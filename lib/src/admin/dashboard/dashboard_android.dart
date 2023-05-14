@@ -22,11 +22,11 @@ class _DashboardAndroidState extends State<DashboardAndroid> {
             children: [
               ElevatedButton(
                 onPressed: () => Navigator.pushNamed(context, '/onboarding'),
-                child: FractionallySizedBox(
+                child: const FractionallySizedBox(
                   widthFactor: 0.7,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
+                    children: [
                       Text(
                         'Adicionar publicação',
                       ),

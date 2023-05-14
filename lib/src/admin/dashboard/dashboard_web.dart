@@ -25,11 +25,11 @@ class _DashboardWebState extends State<DashboardWeb> {
             children: [
               ElevatedButton(
                 onPressed: () => Navigator.pushNamed(context, '/onboarding'),
-                child: FractionallySizedBox(
+                child: const FractionallySizedBox(
                   widthFactor: 0.3,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
+                    children: [
                       Text(
                         'Adicionar publicação',
                       ),

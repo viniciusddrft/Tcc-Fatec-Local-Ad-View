@@ -15,7 +15,7 @@ class AdWidget extends StatefulWidget {
 }
 
 class _AdWidgetState extends State<AdWidget> {
-  final PageController _pageController = PageController();
+  final _pageController = PageController();
 
   void _loop() {
     if (_pageController.page!.toInt() + 1 !=

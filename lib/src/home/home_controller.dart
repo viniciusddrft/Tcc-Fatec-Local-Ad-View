@@ -5,7 +5,7 @@ import '../shared/models/ad_model.dart';
 
 class HomeController {
   List<AdModel>? ads;
-  final RepositoryFirebase _repositoryFirebase = RepositoryFirebase();
+  final _repositoryFirebase = RepositoryFirebase();
 
   Stream<QuerySnapshot<AdModel>> get adsSnapshot =>
       _repositoryFirebase.ads.snapshots();

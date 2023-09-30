@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../interector/login_interector.dart';
+import '../../interector/login_state.dart';
 
 class LoginWeb extends StatefulWidget {
   const LoginWeb({super.key});
@@ -16,6 +17,17 @@ class _LoginWebState extends State<LoginWeb> {
   final passwordController = TextEditingController();
   final _focusNodeEmail = FocusNode();
   final _focusNodePassword = FocusNode();
+
+  @override
+  void initState() {
+    loginInteretor.checkUserAuthentication();
+    loginInteretor.addListener(() {
+      if (loginInteretor.value is LoggedSuccess) {
+        Modular.to.navigate('/dashboard/dashboard');
+      }
+    });
+    super.initState();
+  }
 
   @override
   void dispose() {

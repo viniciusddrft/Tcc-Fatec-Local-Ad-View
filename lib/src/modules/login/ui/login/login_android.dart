@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:local_ad_view/src/modules/login/interector/login_state.dart';
 
 import '../../interector/login_interector.dart';
 
@@ -16,6 +17,18 @@ class _LoginAdnroidState extends State<LoginAdnroid> {
   final passwordController = TextEditingController();
   final _focusNodeEmail = FocusNode();
   final _focusNodePassword = FocusNode();
+
+  @override
+  void initState() {
+    loginInteretor.checkUserAuthentication();
+
+    loginInteretor.addListener(() {
+      if (loginInteretor.value is LoggedSuccess) {
+        Modular.to.navigate('/dashboard/dashboard');
+      }
+    });
+    super.initState();
+  }
 
   @override
   void dispose() {

@@ -57,6 +57,13 @@ class _LoginAdnroidState extends State<LoginAdnroid> {
                     ),
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: TextButton(
+                    onPressed: () {},
+                    child: const Text('Cadastrar-se'),
+                  ),
+                ),
               ],
             ),
           ),

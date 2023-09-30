@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'src/routes/routes.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'src/app_module.dart';
 import 'firebase_options.dart';
 import 'src/shared/theme/themes.dart';
 
@@ -11,7 +11,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(ModularApp(module: AppModule(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,11 +19,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       theme: lightTheme,
-      onGenerateRoute: Routes.manageRoutes,
       debugShowCheckedModeBanner: false,
-      initialRoute: kIsWeb ? '/home' : '/adminLocalAdView',
+      routerConfig: Modular.routerConfig,
     );
   }
 }

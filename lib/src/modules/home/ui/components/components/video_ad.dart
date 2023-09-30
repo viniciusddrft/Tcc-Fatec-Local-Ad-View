@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../../shared/models/ad_model.dart';
+import '../../../interector/entities/ad_entity.dart';
 
 class VideoAdWidget extends StatelessWidget {
   const VideoAdWidget(
-      {super.key, required this.adModel, required this.voidCallback});
+      {super.key, required this.adEntity, required this.voidCallback});
 
-  final AdModel adModel;
+  final AdEntity adEntity;
   final VoidCallback voidCallback;
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: adModel.screenTime), (voidCallback));
+    Future.delayed(Duration(seconds: adEntity.screenTime), (voidCallback));
     return const Text('Em breve');
   }
 }

@@ -2,19 +2,20 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:local_ad_view/src/modules/home/data/adapters/ad_adapter.dart';
 
-import '../models/ad_model.dart';
+import '../../modules/home/interector/entities/ad_entity.dart';
 import 'interface/irepository_firebase.dart';
 
 class RepositoryFirebase implements IRepositoryFirebase {
   final storage = FirebaseStorage.instance;
 
   @override
-  final CollectionReference<AdModel> ads = FirebaseFirestore.instance
+  final CollectionReference<AdEntity> ads = FirebaseFirestore.instance
       .collection('/ads/')
-      .withConverter<AdModel>(
-        fromFirestore: (snapshots, _) => AdModel.fromJson(snapshots.data()!),
-        toFirestore: (movie, _) => movie.toJson(),
+      .withConverter<AdEntity>(
+        fromFirestore: (snapshots, _) => AdAdpter.fromJson(snapshots.data()!),
+        toFirestore: (movie, _) => AdAdpter.toJson(movie),
       );
 
   @override
@@ -22,7 +23,7 @@ class RepositoryFirebase implements IRepositoryFirebase {
     final imagesRef = storage.ref('images');
     await imagesRef.putFile(file);
     ads.add(
-      AdModel(
+      AdEntity(
         creator: '',
         isImage: true,
         hasImageSecondary: false,
@@ -38,7 +39,7 @@ class RepositoryFirebase implements IRepositoryFirebase {
   Future<void> addAdDoubleImage(
       {required File files, required int screenTime}) async {
     ads.add(
-      AdModel(
+      AdEntity(
         creator: '',
         isImage: true,
         hasImageSecondary: true,
@@ -53,7 +54,7 @@ class RepositoryFirebase implements IRepositoryFirebase {
   @override
   Future<void> addAdVideo({required File file, required int screenTime}) async {
     ads.add(
-      AdModel(
+      AdEntity(
         creator: '',
         isImage: false,
         hasImageSecondary: false,

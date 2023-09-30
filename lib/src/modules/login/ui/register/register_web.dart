@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LoginWeb extends StatefulWidget {
-  const LoginWeb({super.key});
+class RegisterWeb extends StatefulWidget {
+  const RegisterWeb({super.key});
 
   @override
-  State<LoginWeb> createState() => _LoginWebState();
+  State<RegisterWeb> createState() => _RegisterWebState();
 }
 
-class _LoginWebState extends State<LoginWeb> {
+class _RegisterWebState extends State<RegisterWeb> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../interector/login_interector.dart';
 
 class LoginAdnroid extends StatefulWidget {
   const LoginAdnroid({super.key});
@@ -8,6 +11,22 @@ class LoginAdnroid extends StatefulWidget {
 }
 
 class _LoginAdnroidState extends State<LoginAdnroid> {
+  final loginInteretor = Modular.get<LoginInteretor>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final _focusNodeEmail = FocusNode();
+  final _focusNodePassword = FocusNode();
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    emailController.dispose();
+    loginInteretor.dispose();
+    _focusNodeEmail.dispose();
+    _focusNodePassword.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,8 +42,10 @@ class _LoginAdnroidState extends State<LoginAdnroid> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
+                  controller: emailController,
+                  focusNode: _focusNodeEmail,
                   decoration: const InputDecoration(
-                    labelText: 'Nome de usuario',
+                    labelText: 'E-mail',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(30),
@@ -35,6 +56,8 @@ class _LoginAdnroidState extends State<LoginAdnroid> {
                 Padding(
                   padding: const EdgeInsets.only(top: 30, bottom: 60),
                   child: TextFormField(
+                    focusNode: _focusNodePassword,
+                    controller: passwordController,
                     decoration: const InputDecoration(
                       labelText: 'Senha',
                       border: OutlineInputBorder(
@@ -49,9 +72,9 @@ class _LoginAdnroidState extends State<LoginAdnroid> {
                   width: 250,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/dashboard');
-                    },
+                    onPressed: () => loginInteretor.login(
+                        email: emailController.text,
+                        password: passwordController.text),
                     child: const Center(
                       child: Text('Entrar'),
                     ),
@@ -60,7 +83,7 @@ class _LoginAdnroidState extends State<LoginAdnroid> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () => Modular.to.navigate('/login/register'),
                     child: const Text('Cadastrar-se'),
                   ),
                 ),

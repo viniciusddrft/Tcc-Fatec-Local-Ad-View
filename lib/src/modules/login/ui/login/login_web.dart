@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../interector/login_interector.dart';
 
 class LoginWeb extends StatefulWidget {
   const LoginWeb({super.key});
@@ -8,6 +11,22 @@ class LoginWeb extends StatefulWidget {
 }
 
 class _LoginWebState extends State<LoginWeb> {
+  final loginInteretor = Modular.get<LoginInteretor>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final _focusNodeEmail = FocusNode();
+  final _focusNodePassword = FocusNode();
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    emailController.dispose();
+    loginInteretor.dispose();
+    _focusNodeEmail.dispose();
+    _focusNodePassword.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -28,8 +47,10 @@ class _LoginWebState extends State<LoginWeb> {
               SizedBox(
                 width: size.width * 0.3,
                 child: TextFormField(
+                  controller: emailController,
+                  focusNode: _focusNodeEmail,
                   decoration: const InputDecoration(
-                    labelText: 'Nome de usuario',
+                    labelText: 'E-mail',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(30),
@@ -43,6 +64,8 @@ class _LoginWebState extends State<LoginWeb> {
                 child: SizedBox(
                   width: size.width * 0.3,
                   child: TextFormField(
+                    controller: passwordController,
+                    focusNode: _focusNodePassword,
                     decoration: const InputDecoration(
                       labelText: 'Senha',
                       border: OutlineInputBorder(
@@ -60,8 +83,9 @@ class _LoginWebState extends State<LoginWeb> {
                   width: size.width * 0.3,
                   height: size.height * 0.06,
                   child: ElevatedButton(
-                    onPressed: () =>
-                        Navigator.pushReplacementNamed(context, '/dashboard'),
+                    onPressed: () => loginInteretor.login(
+                        email: emailController.text,
+                        password: passwordController.text),
                     child: const Center(
                       child: Text(
                         'Entrar',
@@ -76,7 +100,7 @@ class _LoginWebState extends State<LoginWeb> {
                   width: size.width * 0.3,
                   height: size.height * 0.06,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () => Modular.to.navigate('/login/register'),
                     child: const Text('Cadastrar-se'),
                   ),
                 ),

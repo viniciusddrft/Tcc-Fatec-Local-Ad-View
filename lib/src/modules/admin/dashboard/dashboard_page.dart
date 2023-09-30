@@ -1,6 +1,6 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:local_ad_view/src/context/platform_run.dart';
-
 import 'dashboard_ios.dart';
 import 'dashboard_web.dart';
 import 'dashboard_android.dart';
@@ -10,11 +10,11 @@ class DasboardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (PlataformModel.of(context).type == PlatformType.web) {
+    if (kIsWeb) {
       return const DashboardWeb();
-    } else if (PlataformModel.of(context).type == PlatformType.android) {
+    } else if (Platform.isAndroid) {
       return const DashboardAndroid();
-    } else if (PlataformModel.of(context).type == PlatformType.ios) {
+    } else if (Platform.isIOS) {
       return const DashboardIos();
     } else {
       throw Exception('ERROR plataforma não identificada');

@@ -1,8 +1,8 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:local_ad_view/src/admin/login/login_android.dart';
-import 'package:local_ad_view/src/admin/login/login_ios.dart';
-
-import '../context/platform_run.dart';
+import 'package:local_ad_view/src/modules/admin/login/login_android.dart';
+import 'package:local_ad_view/src/modules/admin/login/login_ios.dart';
 import 'login/login_web.dart';
 
 class AdminPage extends StatelessWidget {
@@ -10,11 +10,11 @@ class AdminPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (PlataformModel.of(context).type == PlatformType.web) {
+    if (kIsWeb) {
       return const Center(child: LoginWeb());
-    } else if (PlataformModel.of(context).type == PlatformType.android) {
+    } else if (Platform.isAndroid) {
       return const Center(child: LoginAdnroid());
-    } else if (PlataformModel.of(context).type == PlatformType.ios) {
+    } else if (Platform.isIOS) {
       return const Center(child: LoginIos());
     } else {
       throw Exception('ERROR plataforma não identificada');

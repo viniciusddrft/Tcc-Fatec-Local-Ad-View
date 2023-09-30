@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:local_ad_view/src/admin/onboarding_ad/onboarding_ad_controller.dart';
+import 'package:local_ad_view/src/modules/admin/onboarding_ad/onboarding_ad_controller.dart';
 
 class OnboardingAdAndroid extends StatefulWidget {
   const OnboardingAdAndroid({super.key});

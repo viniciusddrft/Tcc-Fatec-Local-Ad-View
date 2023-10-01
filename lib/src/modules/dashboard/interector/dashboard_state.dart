@@ -12,9 +12,9 @@ final class DashboardInitial extends DashboardState {
   const DashboardInitial();
 }
 
-final class DashboardLoadAds extends DashboardState {
+final class DashboardLoadedAds extends DashboardState {
   final List<AdEntity> ads;
-  const DashboardLoadAds(this.ads);
+  const DashboardLoadedAds(this.ads);
 }
 
 final class DashboardFailed extends DashboardState {

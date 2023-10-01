@@ -1,21 +1,21 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'login_android.dart';
-import 'login_ios.dart';
-import 'login_web.dart';
+import 'dashboard_android.dart';
+import 'dashboard_ios.dart';
+import 'dashboard_web.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class DashboardPage extends StatelessWidget {
+  const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     if (kIsWeb) {
-      return const LoginWeb();
+      return const DashboardWeb();
     } else if (Platform.isAndroid) {
-      return const LoginAdnroid();
+      return const DashboardAndroid();
     } else if (Platform.isIOS) {
-      return const LoginIos();
+      return const DashboardIos();
     } else {
       throw Exception('ERROR plataforma não identificada');
     }

@@ -3,14 +3,14 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:local_ad_view/src/modules/dashboard/interector/dashboard_interector.dart';
 import 'package:local_ad_view/src/modules/dashboard/interector/dashboard_state.dart';
 
-class DashboardPage extends StatefulWidget {
-  const DashboardPage({super.key});
+class DashboardAndroid extends StatefulWidget {
+  const DashboardAndroid({super.key});
 
   @override
-  State<DashboardPage> createState() => _DashboardPageState();
+  State<DashboardAndroid> createState() => _DashboardAndroidState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _DashboardAndroidState extends State<DashboardAndroid> {
   final dashboardInterector = Modular.get<DashboardInterector>();
 
   @override
@@ -88,12 +88,20 @@ class _DashboardPageState extends State<DashboardPage> {
                           borderRadius: BorderRadius.circular(12.0),
                           child: Image.network(
                             value.ads[index].path,
-                            fit: BoxFit.fitWidth,
+                            width: 192,
+                            height: 192,
+                            fit: BoxFit.fill,
                           ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 10),
-                          child: Text(value.ads[index].creator),
+                          child: SizedBox(
+                            width: 200,
+                            child: Text(
+                              value.ads[index].creator,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
                         ),
                         Text(
                           'Date: ${value.ads[index].date.toDate().toString().split(' ').first.replaceAll(r'-', '/')}',

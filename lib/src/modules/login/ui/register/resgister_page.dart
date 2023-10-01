@@ -11,11 +11,11 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (kIsWeb) {
-      return const Center(child: RegisterWeb());
+      return const RegisterWeb();
     } else if (Platform.isAndroid) {
-      return const Center(child: RegisterAndroid());
+      return const RegisterAndroid();
     } else if (Platform.isIOS) {
-      return const Center(child: RegisterIos());
+      return const RegisterIos();
     } else {
       throw Exception('ERROR plataforma não identificada');
     }

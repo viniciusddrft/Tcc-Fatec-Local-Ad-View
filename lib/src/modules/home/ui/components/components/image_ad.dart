@@ -12,6 +12,6 @@ class ImageAdWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: adEntity.screenTime), (voidCallback));
-    return Image.network(adEntity.path, fit: BoxFit.contain);
+    return Image.network(adEntity.path, fit: BoxFit.fill);
   }
 }

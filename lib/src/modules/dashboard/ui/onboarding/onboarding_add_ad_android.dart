@@ -3,15 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:local_ad_view/src/modules/dashboard/interector/dashboard_interector.dart';
+import 'package:local_ad_view/src/modules/dashboard/interector/dashboard_state.dart';
 
-class OnboardingAddAdPage extends StatefulWidget {
-  const OnboardingAddAdPage({super.key});
+class OnboardingAddAdAndroid extends StatefulWidget {
+  const OnboardingAddAdAndroid({super.key});
 
   @override
-  State<OnboardingAddAdPage> createState() => _OnboardingAddAdPageState();
+  State<OnboardingAddAdAndroid> createState() => _OnboardingAddAdAndroidState();
 }
 
-class _OnboardingAddAdPageState extends State<OnboardingAddAdPage> {
+class _OnboardingAddAdAndroidState extends State<OnboardingAddAdAndroid> {
   final image = ValueNotifier<File?>(null);
   final image2 = ValueNotifier<File?>(null);
   final hasTwoImages = ValueNotifier<bool>(false);
@@ -19,6 +20,29 @@ class _OnboardingAddAdPageState extends State<OnboardingAddAdPage> {
   final secondsController = TextEditingController();
   final secondsFocus = FocusNode();
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    dashboardInterector.addListener(() {
+      if (dashboardInterector.value is DashboardAddNewAd) {
+        showModalBottomSheet<void>(
+            context: context,
+            builder: (BuildContext context) {
+              return const SizedBox(
+                height: 200,
+                child: Center(
+                  child: Text('Anúncio adicionado com successo!'),
+                ),
+              );
+            },
+            backgroundColor: Colors.grey);
+
+        Future.delayed(const Duration(seconds: 2),
+            () => Modular.to.navigate('/dashboard/dashboard'));
+      }
+    });
+    super.initState();
+  }
 
   @override
   void dispose() {

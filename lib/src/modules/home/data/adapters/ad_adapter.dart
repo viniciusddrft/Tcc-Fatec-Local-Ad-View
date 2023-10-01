@@ -12,12 +12,12 @@ class AdAdpter {
       screenTime: json['screenTime']);
 
   static Map<String, dynamic> toJson(AdEntity ad) => {
-        'id': ad.id,
         'creator': ad.creator,
         'isImage': ad.isImage,
         'hasImageSecondary': ad.hasImageSecondary,
         'path': ad.path,
         'screenTime': ad.screenTime,
-        'imageSecondary': ad.imageSecondary
+        'imageSecondary': ad.imageSecondary,
+        'date': ad.date,
       };
 }

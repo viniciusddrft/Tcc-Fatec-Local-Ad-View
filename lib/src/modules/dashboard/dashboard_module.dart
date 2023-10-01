@@ -2,8 +2,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:local_ad_view/src/modules/dashboard/data/dashboard_service_impl.dart';
 import 'package:local_ad_view/src/modules/dashboard/interector/dashboard_interector.dart';
 import 'package:local_ad_view/src/modules/dashboard/interector/interface/dashboard_service_interface.dart';
-import 'package:local_ad_view/src/modules/dashboard/ui/dashboard_page.dart';
-import 'package:local_ad_view/src/modules/dashboard/ui/onboarding_add_ad.dart';
+import 'package:local_ad_view/src/modules/dashboard/ui/dashboard/dashboard_page.dart';
+import 'package:local_ad_view/src/modules/dashboard/ui/onboarding/onboarding_add_ad_page.dart';
 
 class DashboardModule extends Module {
   @override
@@ -15,6 +15,6 @@ class DashboardModule extends Module {
   @override
   void routes(RouteManager r) {
     r.child('/dashboard', child: (context) => const DashboardPage());
-    r.child('/onboarding', child: (context) => const OnboardingAddAdPage());
+    r.child('/onboarding', child: (context) => const OnboardingPage());
   }
 }

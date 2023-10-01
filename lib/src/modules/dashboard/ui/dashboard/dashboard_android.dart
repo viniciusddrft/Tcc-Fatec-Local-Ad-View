@@ -30,6 +30,7 @@ class _DashboardAndroidState extends State<DashboardAndroid> {
               );
             },
             backgroundColor: Colors.grey);
+        dashboardInterector.loadAds();
       }
     });
     super.initState();
@@ -44,7 +45,11 @@ class _DashboardAndroidState extends State<DashboardAndroid> {
       body: ValueListenableBuilder(
         valueListenable: dashboardInterector,
         builder: (context, value, child) {
-          if (value is DashboardLoadedAds) {
+          if (value is DashboardLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (value is DashboardLoadedAds) {
             return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,

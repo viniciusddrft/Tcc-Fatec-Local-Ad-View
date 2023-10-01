@@ -1,8 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:local_ad_view/src/modules/home/interector/entities/ad_entity.dart';
 import 'components/image_ad.dart';
 import 'components/image_double_ad.dart';
-import 'components/video_ad.dart';
 
 class AdWidget extends StatefulWidget {
   const AdWidget({super.key, required this.ads});
@@ -15,17 +16,29 @@ class AdWidget extends StatefulWidget {
 
 class _AdWidgetState extends State<AdWidget> {
   final _pageController = PageController();
+  int _currentPage = 0;
+  Timer? _timer;
 
-  void _loop() {
-    if (_pageController.page!.toInt() + 1 != widget.ads.length) {
-      _pageController.nextPage(
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.decelerate);
-    } else {
-      _pageController.animateToPage(0,
-          duration: const Duration(milliseconds: 500),
-          curve: Curves.decelerate);
-    }
+  @override
+  void initState() {
+    _startTimer();
+    super.initState();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(
+        Duration(seconds: widget.ads[_currentPage].screenTime), (timer) {
+      if (_currentPage < widget.ads.length - 1) {
+        _currentPage++;
+      } else {
+        _currentPage = 0;
+      }
+      _pageController.animateToPage(
+        _currentPage,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    });
   }
 
   @override
@@ -35,21 +48,15 @@ class _AdWidgetState extends State<AdWidget> {
         controller: _pageController,
         children: [
           for (int i = 0; i != widget.ads.length; i++)
-            widget.ads[i].isImage
-                ? widget.ads[i].hasImageSecondary!
-                    ? DoubleImageAdWidget(
-                        adEntity: widget.ads[i],
-                        voidCallback: _loop,
-                      )
-                    : ImageAdWidget(
-                        adEntity: widget.ads[i],
-                        voidCallback: _loop,
-                      )
-                : VideoAdWidget(
-                    adEntity: widget.ads[i],
-                    voidCallback: _loop,
-                  )
+            widget.ads[i].hasImageSecondary!
+                ? DoubleImageAdWidget(adEntity: widget.ads[i])
+                : ImageAdWidget(adEntity: widget.ads[i])
         ],
+        onPageChanged: (int page) {
+          setState(() => _currentPage = page);
+          _timer?.cancel();
+          _startTimer();
+        },
       ),
     );
   }

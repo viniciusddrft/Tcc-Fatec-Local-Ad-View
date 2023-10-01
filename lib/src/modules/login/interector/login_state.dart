@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 sealed class LoginState {
   const LoginState();
 }
@@ -16,7 +18,8 @@ final class LoginFailed extends LoginState {
 }
 
 final class LoggedSuccess extends LoginState {
-  const LoggedSuccess();
+  final User user;
+  const LoggedSuccess(this.user);
 }
 
 final class RegisteredSuccess extends LoginState {

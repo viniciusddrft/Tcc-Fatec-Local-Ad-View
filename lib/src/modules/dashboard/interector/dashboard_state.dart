@@ -12,6 +12,10 @@ final class DashboardInitial extends DashboardState {
   const DashboardInitial();
 }
 
+final class DashboardAddNewAd extends DashboardState {
+  const DashboardAddNewAd();
+}
+
 final class DashboardLoadedAds extends DashboardState {
   final List<AdEntity> ads;
   const DashboardLoadedAds(this.ads);

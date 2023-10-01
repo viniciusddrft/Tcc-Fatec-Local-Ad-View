@@ -53,30 +53,28 @@ class _DashboardPageState extends State<DashboardPage> {
                   mainAxisExtent: 250),
               itemCount: value.ads.length,
               itemBuilder: (BuildContext context, int index) => GestureDetector(
-                onLongPress: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text('Deseja remover esse anúncio?'),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Modular.to.pop(),
-                          child: const Text(
-                            'Cancelar',
-                            style: TextStyle(color: Colors.red),
-                          ),
+                onLongPress: () => showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Deseja remover esse anúncio?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Modular.to.pop(),
+                        child: const Text(
+                          'Cancelar',
+                          style: TextStyle(color: Colors.red),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            dashboardInterector.removeAd(value.ads[index].id!);
-                            Modular.to.pop();
-                          },
-                          child: const Text('Remover Anúncio'),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          dashboardInterector.removeAd(value.ads[index].id!);
+                          Modular.to.pop();
+                        },
+                        child: const Text('Remover Anúncio'),
+                      ),
+                    ],
+                  ),
+                ),
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius:
@@ -113,7 +111,7 @@ class _DashboardPageState extends State<DashboardPage> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepPurple,
-        onPressed: () {},
+        onPressed: () => Modular.to.navigate('/dashboard/onboarding'),
         child: const Icon(
           Icons.add,
           color: Colors.white,

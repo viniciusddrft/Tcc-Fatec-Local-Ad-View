@@ -7,11 +7,12 @@ class LoginServiceImpl implements LoginServiceInterface {
   @override
   Future<LoginState> login(String email, String password) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return const LoggedSuccess();
+      return LoggedSuccess(userCredential.user!);
     } catch (e) {
       return LoginFailed(e.toString());
     }
@@ -45,7 +46,7 @@ class LoginServiceImpl implements LoginServiceInterface {
   Future<LoginState> checkUserAuthentication() async {
     final User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      return const LoggedSuccess();
+      return LoggedSuccess(user);
     } else {
       return const Disconnected();
     }

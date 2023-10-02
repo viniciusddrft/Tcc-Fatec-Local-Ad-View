@@ -4,7 +4,6 @@ class AdAdpter {
   static AdEntity fromJson(Map<String, dynamic> json) => AdEntity(
       id: json['id'],
       creator: json['creator'],
-      isImage: json['isImage'],
       hasImageSecondary: json['hasImageSecondary'],
       imageSecondary: json['imageSecondary'],
       path: json['path'],
@@ -13,7 +12,6 @@ class AdAdpter {
 
   static Map<String, dynamic> toJson(AdEntity ad) => {
         'creator': ad.creator,
-        'isImage': ad.isImage,
         'hasImageSecondary': ad.hasImageSecondary,
         'path': ad.path,
         'screenTime': ad.screenTime,

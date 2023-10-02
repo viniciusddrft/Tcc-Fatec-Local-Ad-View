@@ -49,6 +49,8 @@ class _DashboardAndroidState extends State<DashboardAndroid> {
             return const Center(
               child: CircularProgressIndicator(),
             );
+          } else if (value is DashboardFailed) {
+            return Center(child: Text(value.message));
           } else if (value is DashboardLoadedAds) {
             return GridView.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -72,7 +74,7 @@ class _DashboardAndroidState extends State<DashboardAndroid> {
                       ),
                       TextButton(
                         onPressed: () {
-                          dashboardInterector.removeAd(value.ads[index].id!);
+                          dashboardInterector.removeAd(value.ads[index]);
                           Modular.to.pop();
                         },
                         child: const Text('Remover Anúncio'),
@@ -89,15 +91,39 @@ class _DashboardAndroidState extends State<DashboardAndroid> {
                   child: SizedBox(
                     child: Column(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(12.0),
-                          child: Image.network(
-                            value.ads[index].path,
-                            width: 192,
-                            height: 192,
-                            fit: BoxFit.fill,
+                        if (!value.ads[index].hasImageSecondary!)
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(12.0),
+                            child: Image.network(
+                              value.ads[index].path,
+                              width: 192,
+                              height: 192,
+                              fit: BoxFit.fill,
+                            ),
+                          )
+                        else
+                          Column(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12.0),
+                                child: Image.network(
+                                  value.ads[index].path,
+                                  width: 96,
+                                  height: 96,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12.0),
+                                child: Image.network(
+                                  value.ads[index].imageSecondary!,
+                                  width: 96,
+                                  height: 96,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
                         Padding(
                           padding: const EdgeInsets.only(top: 10),
                           child: SizedBox(

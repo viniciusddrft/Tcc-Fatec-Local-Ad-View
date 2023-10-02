@@ -27,9 +27,17 @@ class DashboardServiceImpl implements DashboardServiceInterface {
   }
 
   @override
-  Future<DashboardState> removeAd(String id) async {
+  Future<DashboardState> removeAd(AdEntity ad) async {
     try {
-      await FirebaseFirestore.instance.collection('/ads/').doc(id).delete();
+      final Reference referenceImage =
+          FirebaseStorage.instance.refFromURL(ad.path);
+      await referenceImage.delete();
+      if (ad.hasImageSecondary!) {
+        final Reference referenceImage2 =
+            FirebaseStorage.instance.refFromURL(ad.imageSecondary!);
+        await referenceImage2.delete();
+      }
+      await FirebaseFirestore.instance.collection('/ads/').doc(ad.id).delete();
       return const DashboardRemoveAdSuccess();
     } catch (e) {
       return DashboardFailed(e.toString());
@@ -49,7 +57,6 @@ class DashboardServiceImpl implements DashboardServiceInterface {
 
       final ad = AdEntity(
           creator: FirebaseAuth.instance.currentUser!.email!,
-          isImage: true,
           hasImageSecondary: false,
           screenTime: screenTime,
           path: url,
@@ -74,16 +81,18 @@ class DashboardServiceImpl implements DashboardServiceInterface {
       final Reference storageReference = FirebaseStorage.instance
           .ref()
           .child('ads${DateTime.now().millisecondsSinceEpoch}');
+      final Reference storageReference2 = FirebaseStorage.instance
+          .ref()
+          .child('ads2${DateTime.now().millisecondsSinceEpoch}');
       final UploadTask uploadTask = storageReference.putFile(image);
       final TaskSnapshot downloadUrl = (await uploadTask);
       final String url = await downloadUrl.ref.getDownloadURL();
-      final UploadTask uploadTask2 = storageReference.putFile(image2);
+      final UploadTask uploadTask2 = storageReference2.putFile(image2);
       final TaskSnapshot downloadUrl2 = (await uploadTask2);
       final String url2 = await downloadUrl2.ref.getDownloadURL();
 
       final ad = AdEntity(
         creator: FirebaseAuth.instance.currentUser!.email!,
-        isImage: true,
         hasImageSecondary: true,
         screenTime: screenTime,
         path: url,

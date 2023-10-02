@@ -9,6 +9,6 @@ class ImageAdWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(adEntity.path, fit: BoxFit.fill);
+    return Image.network(adEntity.path, fit: BoxFit.contain);
   }
 }

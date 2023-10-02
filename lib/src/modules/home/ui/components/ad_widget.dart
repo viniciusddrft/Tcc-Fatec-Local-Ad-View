@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:local_ad_view/src/modules/home/interector/entities/ad_entity.dart';
 import 'components/image_ad.dart';

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -22,8 +24,9 @@ class _HomePageState extends State<HomePage> {
       Modular.to.navigate('/login/login');
     } else {
       homeInterector.loadAds();
+      Timer.periodic(const Duration(minutes: 5),
+          (Timer timer) => homeInterector.loadAds());
     }
-
     super.initState();
   }
 
@@ -34,12 +37,8 @@ class _HomePageState extends State<HomePage> {
       builder: (context, value, child) => switch (value) {
         HomeLoading() => const CircularProgressIndicator(),
         HomeInitial() => const CircularProgressIndicator(),
-        HomeFailed() => const Center(
-            child: Text('Erro'),
-          ),
-        HomeSuccess(ads: final List<AdEntity> ads) => AdWidget(
-            ads: ads,
-          ),
+        HomeFailed() => const Center(child: Text('Erro')),
+        HomeSuccess(ads: final List<AdEntity> ads) => AdWidget(ads: ads),
       },
     );
   }

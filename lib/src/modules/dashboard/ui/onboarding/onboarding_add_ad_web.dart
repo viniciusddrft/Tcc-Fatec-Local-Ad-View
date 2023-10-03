@@ -124,7 +124,7 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
 
                           final platformFile = result!.files.first;
 
-                          image.value = File(platformFile.path!);
+                          image.value = File.fromRawPath(platformFile.bytes!);
                         },
                         onLongPress: () {
                           showDialog(
@@ -191,8 +191,8 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
                                       ]);
 
                                   final platformFile = result!.files.first;
-
-                                  image2.value = File(platformFile.path!);
+                                  image2.value =
+                                      File.fromRawPath(platformFile.bytes!);
                                 },
                                 onLongPress: () {
                                   showDialog(

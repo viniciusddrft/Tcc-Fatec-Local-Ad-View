@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:local_ad_view/src/modules/dashboard/ui/onboarding/onboarding_add_ad_android.dart';
 import 'package:local_ad_view/src/modules/dashboard/ui/onboarding/onboarding_add_ad_web.dart';
-import 'onboarding_add_add_ios.dart';
+import 'onboarding_add_ad_ios.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});

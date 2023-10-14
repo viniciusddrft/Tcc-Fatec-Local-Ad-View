@@ -12,7 +12,7 @@ class LoginAdnroid extends StatefulWidget {
 }
 
 class _LoginAdnroidState extends State<LoginAdnroid> {
-  final loginInteretor = Modular.get<LoginInteretor>();
+  final loginInteretor = Modular.get<LoginInterector>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final _focusNodeEmail = FocusNode();
@@ -34,7 +34,6 @@ class _LoginAdnroidState extends State<LoginAdnroid> {
   void dispose() {
     passwordController.dispose();
     emailController.dispose();
-    loginInteretor.dispose();
     _focusNodeEmail.dispose();
     _focusNodePassword.dispose();
     super.dispose();

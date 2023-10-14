@@ -1,13 +1,17 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:local_ad_view/src/modules/login/interector/entities/user.dart';
 import 'package:local_ad_view/src/modules/login/interector/interface/login_service_interface.dart';
 import 'package:local_ad_view/src/modules/login/interector/login_state.dart';
 import 'package:crypto/crypto.dart';
 
-class LoginInteretor extends ValueNotifier<LoginState> {
-  LoginInteretor(this._loginService) : super(const LoginInitial());
+class LoginInterector extends ValueNotifier<LoginState> {
+  LoginInterector(this._loginService) : super(const LoginInitial());
 
   final LoginServiceInterface _loginService;
+  static UserEntity? _user;
+
+  UserEntity? get user => _user;
 
   void register(
       {required String email,
@@ -26,10 +30,16 @@ class LoginInteretor extends ValueNotifier<LoginState> {
   void login({required String email, required String password}) async {
     value = const LoginLoading();
     value = await _loginService.login(email.trim(), password.trim());
+    if (value is LoggedSuccess) {
+      _user = (value as LoggedSuccess).user;
+    }
   }
 
   void checkUserAuthentication() async {
     value = const LoginLoading();
     value = await _loginService.checkUserAuthentication();
+    if (value is LoggedSuccess) {
+      _user = (value as LoggedSuccess).user;
+    }
   }
 }

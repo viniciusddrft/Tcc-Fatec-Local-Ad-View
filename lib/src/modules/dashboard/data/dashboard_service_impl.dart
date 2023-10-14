@@ -11,7 +11,10 @@ class DashboardServiceImpl implements DashboardServiceInterface {
   @override
   Future<DashboardState> loadAds() async {
     try {
-      final ads = await FirebaseFirestore.instance.collection('/ads/').get();
+      final ads = await FirebaseFirestore.instance
+          .collection('/ads/')
+          .orderBy('date', descending: true)
+          .get();
 
       final List<AdEntity> listAds = [];
 

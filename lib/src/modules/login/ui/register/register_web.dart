@@ -11,7 +11,7 @@ class RegisterWeb extends StatefulWidget {
 }
 
 class _RegisterWebState extends State<RegisterWeb> {
-  final loginInteretor = Modular.get<LoginInteretor>();
+  final loginInteretor = Modular.get<LoginInterector>();
   final emailController = TextEditingController();
   final tokenController = TextEditingController();
   final passwordController = TextEditingController();
@@ -35,7 +35,7 @@ class _RegisterWebState extends State<RegisterWeb> {
             },
             backgroundColor: Colors.grey);
 
-        Future.delayed(const Duration(seconds: 2),
+        Future.delayed(const Duration(seconds: 1),
             () => Modular.to.navigate('/login/login'));
       } else if (loginInteretor.value is LoginFailed) {
         showModalBottomSheet<void>(

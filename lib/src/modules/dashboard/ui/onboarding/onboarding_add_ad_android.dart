@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:local_ad_view/src/modules/dashboard/interector/dashboard_interector.dart';
 import 'package:local_ad_view/src/modules/dashboard/interector/dashboard_state.dart';
+import 'package:local_ad_view/src/modules/login/interector/login_interector.dart';
 
 class OnboardingAddAdAndroid extends StatefulWidget {
   const OnboardingAddAdAndroid({super.key});
@@ -17,6 +18,7 @@ class _OnboardingAddAdAndroidState extends State<OnboardingAddAdAndroid> {
   final image2 = ValueNotifier<File?>(null);
   final hasTwoImages = ValueNotifier<bool>(false);
   final dashboardInterector = Modular.get<DashboardInterector>();
+  final loginInterector = Modular.get<LoginInterector>();
   final secondsController = TextEditingController();
   final secondsFocus = FocusNode();
   final _formKey = GlobalKey<FormState>();
@@ -37,8 +39,10 @@ class _OnboardingAddAdAndroidState extends State<OnboardingAddAdAndroid> {
             },
             backgroundColor: Colors.grey);
 
-        Future.delayed(const Duration(seconds: 2),
-            () => Modular.to.navigate('/dashboard/dashboard'));
+        Future.delayed(
+          const Duration(seconds: 1),
+          () => Modular.to.pushReplacementNamed('/dashboard/dashboard'),
+        );
       }
     });
     super.initState();
@@ -60,6 +64,7 @@ class _OnboardingAddAdAndroidState extends State<OnboardingAddAdAndroid> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Adicionar Anúncio'),
+        automaticallyImplyLeading: false,
       ),
       body: AnimatedBuilder(
         animation: Listenable.merge(
@@ -114,9 +119,10 @@ class _OnboardingAddAdAndroidState extends State<OnboardingAddAdAndroid> {
                         type: FileType.image,
                       );
 
-                      final platformFile = result!.files.first;
-
-                      image.value = File(platformFile.path!);
+                      final platformFile = result?.files.first;
+                      if (platformFile != null) {
+                        image.value = File(platformFile.path!);
+                      }
                     },
                     onLongPress: () {
                       showDialog(
@@ -178,9 +184,11 @@ class _OnboardingAddAdAndroidState extends State<OnboardingAddAdAndroid> {
                                 type: FileType.image,
                               );
 
-                              final platformFile = result!.files.first;
+                              final platformFile = result?.files.first;
 
-                              image2.value = File(platformFile.path!);
+                              if (platformFile != null) {
+                                image2.value = File(platformFile.path!);
+                              }
                             },
                             onLongPress: () {
                               showDialog(
@@ -230,46 +238,59 @@ class _OnboardingAddAdAndroidState extends State<OnboardingAddAdAndroid> {
                         )
                       : const SizedBox.shrink(),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 50),
-                  child: Text('Coloque o tempo de duração em segundos'),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-                  child: Form(
-                    key: _formKey,
-                    child: TextFormField(
-                      controller: secondsController,
-                      focusNode: secondsFocus,
-                      decoration: const InputDecoration(
-                        labelText: 'Duração ...',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
+                if (loginInterector.user!.isAdm)
+                  const Padding(
+                    padding: EdgeInsets.only(top: 50),
+                    child: Text('Coloque o tempo de duração em segundos'),
+                  ),
+                if (loginInterector.user!.isAdm)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 10),
+                    child: Form(
+                      key: _formKey,
+                      child: TextFormField(
+                        controller: secondsController,
+                        focusNode: secondsFocus,
+                        decoration: const InputDecoration(
+                          labelText: 'Duração ...',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
                 const Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 50),
                   child: ElevatedButton(
                     onPressed: () {
                       secondsFocus.unfocus();
-
-                      if (_formKey.currentState!.validate()) {
+                      if (loginInterector.user!.isAdm) {
+                        if (_formKey.currentState!.validate()) {
+                          if (hasTwoImages.value) {
+                            dashboardInterector.addAD(
+                                image: image.value!,
+                                image2: image2.value!,
+                                seconds: int.parse(secondsController.text));
+                          } else {
+                            dashboardInterector.addAD(
+                                image: image.value!,
+                                seconds: int.parse(secondsController.text));
+                          }
+                        }
+                      } else {
                         if (hasTwoImages.value) {
                           dashboardInterector.addAD(
                               image: image.value!,
                               image2: image2.value!,
-                              seconds: int.parse(secondsController.text));
+                              seconds: 30);
                         } else {
                           dashboardInterector.addAD(
-                              image: image.value!,
-                              seconds: int.parse(secondsController.text));
+                              image: image.value!, seconds: 30);
                         }
                       }
                     },

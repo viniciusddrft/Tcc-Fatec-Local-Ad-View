@@ -39,7 +39,7 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
             },
             backgroundColor: Colors.grey);
 
-        Future.delayed(const Duration(seconds: 2),
+        Future.delayed(const Duration(seconds: 1),
             () => Modular.to.navigate('/dashboard/dashboard'));
       }
     });

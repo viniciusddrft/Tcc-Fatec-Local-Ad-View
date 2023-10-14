@@ -11,7 +11,7 @@ class RegisterAndroid extends StatefulWidget {
 }
 
 class _RegisterAndroidState extends State<RegisterAndroid> {
-  final loginInteretor = Modular.get<LoginInteretor>();
+  final loginInteretor = Modular.get<LoginInterector>();
   final emailController = TextEditingController();
   final tokenController = TextEditingController();
   final passwordController = TextEditingController();

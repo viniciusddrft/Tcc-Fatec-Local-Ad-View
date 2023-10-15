@@ -12,18 +12,19 @@ class LoginAdnroid extends StatefulWidget {
 }
 
 class _LoginAdnroidState extends State<LoginAdnroid> {
-  final loginInteretor = Modular.get<LoginInterector>();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final _loginInterector = Modular.get<LoginInterector>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   final _focusNodeEmail = FocusNode();
   final _focusNodePassword = FocusNode();
+  final _isObfuscatePassword = ValueNotifier<bool>(true);
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    loginInteretor.checkUserAuthentication();
-
-    loginInteretor.addListener(() {
-      if (loginInteretor.value is LoggedSuccess) {
+    _loginInterector.checkUserAuthentication();
+    _loginInterector.addListener(() {
+      if (_loginInterector.value is LoggedSuccess) {
         Modular.to.navigate('/dashboard/dashboard');
       }
     });
@@ -32,10 +33,11 @@ class _LoginAdnroidState extends State<LoginAdnroid> {
 
   @override
   void dispose() {
-    passwordController.dispose();
-    emailController.dispose();
+    _passwordController.dispose();
+    _emailController.dispose();
     _focusNodeEmail.dispose();
     _focusNodePassword.dispose();
+    _isObfuscatePassword.dispose();
     super.dispose();
   }
 
@@ -48,14 +50,16 @@ class _LoginAdnroidState extends State<LoginAdnroid> {
       ),
       body: Center(
         child: Form(
+          key: _formKey,
           child: FractionallySizedBox(
             widthFactor: 0.6,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextFormField(
-                  controller: emailController,
+                  controller: _emailController,
                   focusNode: _focusNodeEmail,
+                  keyboardType: TextInputType.emailAddress,
                   decoration: const InputDecoration(
                     labelText: 'E-mail',
                     border: OutlineInputBorder(
@@ -64,19 +68,44 @@ class _LoginAdnroidState extends State<LoginAdnroid> {
                       ),
                     ),
                   ),
+                  validator: (text) {
+                    if (text == null || text.isEmpty) {
+                      return 'Coloque o E-mail';
+                    } else {
+                      return null;
+                    }
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 30, bottom: 60),
-                  child: TextFormField(
-                    focusNode: _focusNodePassword,
-                    controller: passwordController,
-                    decoration: const InputDecoration(
-                      labelText: 'Senha',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
+                  child: ValueListenableBuilder(
+                    valueListenable: _isObfuscatePassword,
+                    builder: (context, _, child) => TextFormField(
+                      focusNode: _focusNodePassword,
+                      controller: _passwordController,
+                      obscureText: _isObfuscatePassword.value,
+                      decoration: InputDecoration(
+                        labelText: 'Senha',
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
+                        suffixIcon: GestureDetector(
+                          onTap: () => _isObfuscatePassword.value =
+                              !_isObfuscatePassword.value,
+                          child: Icon(_isObfuscatePassword.value
+                              ? Icons.visibility_off
+                              : Icons.visibility),
                         ),
                       ),
+                      validator: (text) {
+                        if (text == null || text.isEmpty) {
+                          return 'Coloque a senha';
+                        } else {
+                          return null;
+                        }
+                      },
                     ),
                   ),
                 ),
@@ -84,9 +113,13 @@ class _LoginAdnroidState extends State<LoginAdnroid> {
                   width: 250,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () => loginInteretor.login(
-                        email: emailController.text,
-                        password: passwordController.text),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _loginInterector.login(
+                            email: _emailController.text,
+                            password: _passwordController.text);
+                      }
+                    },
                     child: const Center(
                       child: Text('Entrar'),
                     ),

@@ -272,25 +272,33 @@ class _OnboardingAddAdAndroidState extends State<OnboardingAddAdAndroid> {
                       if (loginInterector.user!.isAdm) {
                         if (_formKey.currentState!.validate()) {
                           if (hasTwoImages.value) {
-                            dashboardInterector.addAD(
-                                image: image.value!,
-                                image2: image2.value!,
-                                seconds: int.parse(secondsController.text));
+                            if (image.value != null && image2.value != null) {
+                              dashboardInterector.addAD(
+                                  image: image.value!,
+                                  image2: image2.value!,
+                                  seconds: int.parse(secondsController.text));
+                            }
                           } else {
-                            dashboardInterector.addAD(
-                                image: image.value!,
-                                seconds: int.parse(secondsController.text));
+                            if (image.value != null) {
+                              dashboardInterector.addAD(
+                                  image: image.value!,
+                                  seconds: int.parse(secondsController.text));
+                            }
                           }
                         }
                       } else {
                         if (hasTwoImages.value) {
-                          dashboardInterector.addAD(
-                              image: image.value!,
-                              image2: image2.value!,
-                              seconds: 30);
+                          if (image.value != null && image2.value != null) {
+                            dashboardInterector.addAD(
+                                image: image.value!,
+                                image2: image2.value!,
+                                seconds: 30);
+                          }
                         } else {
-                          dashboardInterector.addAD(
-                              image: image.value!, seconds: 30);
+                          if (image.value != null) {
+                            dashboardInterector.addAD(
+                                image: image.value!, seconds: 30);
+                          }
                         }
                       }
                     },

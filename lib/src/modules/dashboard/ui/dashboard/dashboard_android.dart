@@ -38,6 +38,12 @@ class _DashboardAndroidState extends State<DashboardAndroid> {
   }
 
   @override
+  void dispose() {
+    dashboardInterector.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

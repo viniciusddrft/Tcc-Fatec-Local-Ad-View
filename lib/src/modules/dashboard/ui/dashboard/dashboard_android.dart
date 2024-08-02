@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:local_ad_view/src/modules/dashboard/interector/dashboard_interector.dart';
-import 'package:local_ad_view/src/modules/dashboard/interector/dashboard_state.dart';
-import '../../../login/interector/login_interector.dart';
+import 'package:local_ad_view/src/modules/dashboard/interactor/dashboard_interactor.dart';
+import 'package:local_ad_view/src/modules/dashboard/interactor/dashboard_state.dart';
+import '../../../login/interactor/login_interactor.dart';
 
 class DashboardAndroid extends StatefulWidget {
   const DashboardAndroid({super.key});
@@ -12,14 +12,14 @@ class DashboardAndroid extends StatefulWidget {
 }
 
 class _DashboardAndroidState extends State<DashboardAndroid> {
-  final dashboardInterector = Modular.get<DashboardInterector>();
-  final loginInterector = Modular.get<LoginInterector>();
+  final dashboardinteractor = Modular.get<DashboardInteractor>();
+  final logininteractor = Modular.get<Logininteractor>();
 
   @override
   void initState() {
-    dashboardInterector.loadAds();
-    dashboardInterector.addListener(() {
-      if (dashboardInterector.value is DashboardRemoveAdSuccess) {
+    dashboardinteractor.loadAds();
+    dashboardinteractor.addListener(() {
+      if (dashboardinteractor.value is DashboardRemoveAdSuccess) {
         showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
@@ -31,7 +31,7 @@ class _DashboardAndroidState extends State<DashboardAndroid> {
               );
             },
             backgroundColor: Colors.grey);
-        dashboardInterector.loadAds();
+        dashboardinteractor.loadAds();
       }
     });
     super.initState();
@@ -39,7 +39,7 @@ class _DashboardAndroidState extends State<DashboardAndroid> {
 
   @override
   void dispose() {
-    dashboardInterector.dispose();
+    dashboardinteractor.dispose();
     super.dispose();
   }
 
@@ -50,7 +50,7 @@ class _DashboardAndroidState extends State<DashboardAndroid> {
         title: const Text('Dashboard'),
       ),
       body: ValueListenableBuilder(
-        valueListenable: dashboardInterector,
+        valueListenable: dashboardinteractor,
         builder: (context, value, child) {
           if (value is DashboardLoading) {
             return const Center(
@@ -60,7 +60,7 @@ class _DashboardAndroidState extends State<DashboardAndroid> {
             return Center(child: Text(value.message));
           } else if (value is DashboardLoadedAds) {
             return RefreshIndicator(
-              onRefresh: () async => dashboardInterector.loadAds(),
+              onRefresh: () async => dashboardinteractor.loadAds(),
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -71,8 +71,8 @@ class _DashboardAndroidState extends State<DashboardAndroid> {
                 itemBuilder: (BuildContext context, int index) =>
                     GestureDetector(
                   onLongPress: () {
-                    if (loginInterector.user!.isAdm ||
-                        loginInterector.user!.user ==
+                    if (logininteractor.user!.isAdm ||
+                        logininteractor.user!.user ==
                             value.ads[index].creator) {
                       showDialog(
                         context: context,
@@ -88,7 +88,7 @@ class _DashboardAndroidState extends State<DashboardAndroid> {
                             ),
                             TextButton(
                               onPressed: () {
-                                dashboardInterector.removeAd(value.ads[index]);
+                                dashboardinteractor.removeAd(value.ads[index]);
                                 Modular.to.pop();
                               },
                               child: const Text('Remover Anúncio'),

@@ -2,9 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:local_ad_view/src/modules/dashboard/interector/dashboard_interector.dart';
-import 'package:local_ad_view/src/modules/dashboard/interector/dashboard_state.dart';
-import 'package:local_ad_view/src/modules/login/interector/login_interector.dart';
+import 'package:local_ad_view/src/modules/dashboard/interactor/dashboard_interactor.dart';
+import 'package:local_ad_view/src/modules/dashboard/interactor/dashboard_state.dart';
+import 'package:local_ad_view/src/modules/login/interactor/login_interactor.dart';
 
 class OnboardingAddAdAndroid extends StatefulWidget {
   const OnboardingAddAdAndroid({super.key});
@@ -17,16 +17,16 @@ class _OnboardingAddAdAndroidState extends State<OnboardingAddAdAndroid> {
   final image = ValueNotifier<File?>(null);
   final image2 = ValueNotifier<File?>(null);
   final hasTwoImages = ValueNotifier<bool>(false);
-  final dashboardInterector = Modular.get<DashboardInterector>();
-  final loginInterector = Modular.get<LoginInterector>();
+  final dashboardinteractor = Modular.get<DashboardInteractor>();
+  final logininteractor = Modular.get<Logininteractor>();
   final secondsController = TextEditingController();
   final secondsFocus = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    dashboardInterector.addListener(() {
-      if (dashboardInterector.value is DashboardAddNewAd) {
+    dashboardinteractor.addListener(() {
+      if (dashboardinteractor.value is DashboardAddNewAd) {
         showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
@@ -53,7 +53,7 @@ class _OnboardingAddAdAndroidState extends State<OnboardingAddAdAndroid> {
     hasTwoImages.dispose();
     image.dispose();
     image2.dispose();
-    dashboardInterector.dispose();
+    dashboardinteractor.dispose();
     secondsController.dispose();
     secondsFocus.dispose();
     super.dispose();
@@ -68,16 +68,16 @@ class _OnboardingAddAdAndroidState extends State<OnboardingAddAdAndroid> {
       ),
       body: AnimatedBuilder(
         animation: Listenable.merge(
-            [hasTwoImages, image, image2, dashboardInterector]),
+            [hasTwoImages, image, image2, dashboardinteractor]),
         builder: (context, child) {
-          if (dashboardInterector.value is DashboardLoading) {
+          if (dashboardinteractor.value is DashboardLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (dashboardInterector.value is DashboardFailed) {
+          } else if (dashboardinteractor.value is DashboardFailed) {
             return Center(
               child:
-                  Text((dashboardInterector.value as DashboardFailed).message),
+                  Text((dashboardinteractor.value as DashboardFailed).message),
             );
           } else {
             return Column(
@@ -238,12 +238,12 @@ class _OnboardingAddAdAndroidState extends State<OnboardingAddAdAndroid> {
                         )
                       : const SizedBox.shrink(),
                 ),
-                if (loginInterector.user!.isAdm)
+                if (logininteractor.user!.isAdm)
                   const Padding(
                     padding: EdgeInsets.only(top: 50),
                     child: Text('Coloque o tempo de duração em segundos'),
                   ),
-                if (loginInterector.user!.isAdm)
+                if (logininteractor.user!.isAdm)
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 50, vertical: 10),
@@ -269,18 +269,18 @@ class _OnboardingAddAdAndroidState extends State<OnboardingAddAdAndroid> {
                   child: ElevatedButton(
                     onPressed: () {
                       secondsFocus.unfocus();
-                      if (loginInterector.user!.isAdm) {
+                      if (logininteractor.user!.isAdm) {
                         if (_formKey.currentState!.validate()) {
                           if (hasTwoImages.value) {
                             if (image.value != null && image2.value != null) {
-                              dashboardInterector.addAD(
+                              dashboardinteractor.addAD(
                                   image: image.value!,
                                   image2: image2.value!,
                                   seconds: int.parse(secondsController.text));
                             }
                           } else {
                             if (image.value != null) {
-                              dashboardInterector.addAD(
+                              dashboardinteractor.addAD(
                                   image: image.value!,
                                   seconds: int.parse(secondsController.text));
                             }
@@ -289,14 +289,14 @@ class _OnboardingAddAdAndroidState extends State<OnboardingAddAdAndroid> {
                       } else {
                         if (hasTwoImages.value) {
                           if (image.value != null && image2.value != null) {
-                            dashboardInterector.addAD(
+                            dashboardinteractor.addAD(
                                 image: image.value!,
                                 image2: image2.value!,
                                 seconds: 30);
                           }
                         } else {
                           if (image.value != null) {
-                            dashboardInterector.addAD(
+                            dashboardinteractor.addAD(
                                 image: image.value!, seconds: 30);
                           }
                         }

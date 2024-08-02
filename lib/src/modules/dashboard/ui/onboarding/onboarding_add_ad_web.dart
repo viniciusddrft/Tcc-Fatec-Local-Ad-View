@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
-import '../../interector/dashboard_interector.dart';
-import '../../interector/dashboard_state.dart';
+import '../../interactor/dashboard_interactor.dart';
+import '../../interactor/dashboard_state.dart';
 
 class OnboardingAddAdWeb extends StatefulWidget {
   const OnboardingAddAdWeb({super.key});
@@ -18,15 +16,15 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
   final image = ValueNotifier<File?>(null);
   final image2 = ValueNotifier<File?>(null);
   final hasTwoImages = ValueNotifier<bool>(false);
-  final dashboardInterector = Modular.get<DashboardInterector>();
+  final dashboardinteractor = Modular.get<DashboardInteractor>();
   final secondsController = TextEditingController();
   final secondsFocus = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    dashboardInterector.addListener(() {
-      if (dashboardInterector.value is DashboardAddNewAd) {
+    dashboardinteractor.addListener(() {
+      if (dashboardinteractor.value is DashboardAddNewAd) {
         showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
@@ -51,7 +49,7 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
     hasTwoImages.dispose();
     image.dispose();
     image2.dispose();
-    dashboardInterector.dispose();
+    dashboardinteractor.dispose();
     secondsController.dispose();
     secondsFocus.dispose();
     super.dispose();
@@ -65,16 +63,16 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
       ),
       body: AnimatedBuilder(
         animation: Listenable.merge(
-            [hasTwoImages, image, image2, dashboardInterector]),
+            [hasTwoImages, image, image2, dashboardinteractor]),
         builder: (context, child) {
-          if (dashboardInterector.value is DashboardLoading) {
+          if (dashboardinteractor.value is DashboardLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          } else if (dashboardInterector.value is DashboardFailed) {
+          } else if (dashboardinteractor.value is DashboardFailed) {
             return Center(
               child:
-                  Text((dashboardInterector.value as DashboardFailed).message),
+                  Text((dashboardinteractor.value as DashboardFailed).message),
             );
           } else {
             return Column(
@@ -283,12 +281,12 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
 
                       if (_formKey.currentState!.validate()) {
                         if (hasTwoImages.value) {
-                          dashboardInterector.addAD(
+                          dashboardinteractor.addAD(
                               image: image.value!,
                               image2: image2.value!,
                               seconds: int.parse(secondsController.text));
                         } else {
-                          dashboardInterector.addAD(
+                          dashboardinteractor.addAD(
                               image: image.value!,
                               seconds: int.parse(secondsController.text));
                         }

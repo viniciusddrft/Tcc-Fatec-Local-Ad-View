@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:local_ad_view/src/modules/login/interector/login_state.dart';
+import 'package:local_ad_view/src/modules/login/interactor/login_state.dart';
 
-import '../../interector/login_interector.dart';
+import '../../interactor/login_interactor.dart';
 
 class LoginAdnroid extends StatefulWidget {
   const LoginAdnroid({super.key});
@@ -12,7 +12,7 @@ class LoginAdnroid extends StatefulWidget {
 }
 
 class _LoginAdnroidState extends State<LoginAdnroid> {
-  final _loginInterector = Modular.get<LoginInterector>();
+  final _logininteractor = Modular.get<Logininteractor>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _focusNodeEmail = FocusNode();
@@ -22,9 +22,9 @@ class _LoginAdnroidState extends State<LoginAdnroid> {
 
   @override
   void initState() {
-    _loginInterector.checkUserAuthentication();
-    _loginInterector.addListener(() {
-      if (_loginInterector.value is LoggedSuccess) {
+    _logininteractor.checkUserAuthentication();
+    _logininteractor.addListener(() {
+      if (_logininteractor.value is LoggedSuccess) {
         Modular.to.navigate('/dashboard/dashboard');
       }
     });
@@ -115,7 +115,7 @@ class _LoginAdnroidState extends State<LoginAdnroid> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        _loginInterector.login(
+                        _logininteractor.login(
                             email: _emailController.text,
                             password: _passwordController.text);
                       }

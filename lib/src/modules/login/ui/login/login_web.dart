@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../interector/login_interector.dart';
-import '../../interector/login_state.dart';
+import '../../interactor/login_interactor.dart';
+import '../../interactor/login_state.dart';
 
 class LoginWeb extends StatefulWidget {
   const LoginWeb({super.key});
@@ -12,7 +12,7 @@ class LoginWeb extends StatefulWidget {
 }
 
 class _LoginWebState extends State<LoginWeb> {
-  final loginInteretor = Modular.get<LoginInterector>();
+  final loginInteretor = Modular.get<Logininteractor>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final _focusNodeEmail = FocusNode();

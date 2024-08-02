@@ -1,4 +1,4 @@
-import 'package:local_ad_view/src/modules/login/interector/entities/user.dart';
+import 'package:local_ad_view/src/modules/login/interactor/entities/user.dart';
 
 sealed class LoginState {
   const LoginState();

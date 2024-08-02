@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
-import 'package:local_ad_view/src/modules/login/interector/entities/user.dart';
-import 'package:local_ad_view/src/modules/login/interector/interface/login_service_interface.dart';
-import 'package:local_ad_view/src/modules/login/interector/login_state.dart';
+import 'package:local_ad_view/src/modules/login/interactor/entities/user.dart';
+import 'package:local_ad_view/src/modules/login/interactor/interface/login_service_interface.dart';
+import 'package:local_ad_view/src/modules/login/interactor/login_state.dart';
 import 'package:crypto/crypto.dart';
 
-class LoginInterector extends ValueNotifier<LoginState> {
-  LoginInterector(this._loginService) : super(const LoginInitial());
+class Logininteractor extends ValueNotifier<LoginState> {
+  Logininteractor(this._loginService) : super(const LoginInitial());
 
   final LoginServiceInterface _loginService;
   static UserEntity? _user;

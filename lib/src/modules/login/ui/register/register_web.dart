@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:local_ad_view/src/modules/login/interector/login_interector.dart';
-import '../../interector/login_state.dart';
+import 'package:local_ad_view/src/modules/login/interactor/login_interactor.dart';
+import '../../interactor/login_state.dart';
 
 class RegisterWeb extends StatefulWidget {
   const RegisterWeb({super.key});
@@ -11,7 +11,7 @@ class RegisterWeb extends StatefulWidget {
 }
 
 class _RegisterWebState extends State<RegisterWeb> {
-  final loginInteretor = Modular.get<LoginInterector>();
+  final loginInteretor = Modular.get<Logininteractor>();
   final emailController = TextEditingController();
   final tokenController = TextEditingController();
   final passwordController = TextEditingController();

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:local_ad_view/src/modules/login/data/adapters/user_adapter.dart';
-import 'package:local_ad_view/src/modules/login/interector/entities/user.dart';
-import 'package:local_ad_view/src/modules/login/interector/interface/login_service_interface.dart';
-import 'package:local_ad_view/src/modules/login/interector/login_state.dart';
+import 'package:local_ad_view/src/modules/login/interactor/entities/user.dart';
+import 'package:local_ad_view/src/modules/login/interactor/interface/login_service_interface.dart';
+import 'package:local_ad_view/src/modules/login/interactor/login_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginServiceImpl implements LoginServiceInterface {

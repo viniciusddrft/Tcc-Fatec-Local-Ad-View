@@ -1,4 +1,4 @@
-import '../../interector/entities/ad_entity.dart';
+import '../../interactor/entities/ad_entity.dart';
 
 class AdAdpter {
   static AdEntity fromJson(Map<String, dynamic> json) => AdEntity(

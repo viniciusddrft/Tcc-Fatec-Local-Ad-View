@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:local_ad_view/src/modules/dashboard/interector/dashboard_state.dart';
-import 'package:local_ad_view/src/modules/dashboard/interector/interface/dashboard_service_interface.dart';
-import 'package:local_ad_view/src/modules/home/interector/entities/ad_entity.dart';
+import 'package:local_ad_view/src/modules/dashboard/interactor/dashboard_state.dart';
+import 'package:local_ad_view/src/modules/dashboard/interactor/interface/dashboard_service_interface.dart';
+import 'package:local_ad_view/src/modules/home/interactor/entities/ad_entity.dart';
 
-class DashboardInterector extends ValueNotifier<DashboardState> {
-  DashboardInterector(this.dashboardService) : super(const DashboardInitial());
+class DashboardInteractor extends ValueNotifier<DashboardState> {
+  DashboardInteractor(this.dashboardService) : super(const DashboardInitial());
 
   final DashboardServiceInterface dashboardService;
 

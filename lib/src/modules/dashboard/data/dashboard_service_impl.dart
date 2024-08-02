@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:local_ad_view/src/modules/dashboard/interector/dashboard_state.dart';
-import 'package:local_ad_view/src/modules/dashboard/interector/interface/dashboard_service_interface.dart';
+import 'package:local_ad_view/src/modules/dashboard/interactor/dashboard_state.dart';
+import 'package:local_ad_view/src/modules/dashboard/interactor/interface/dashboard_service_interface.dart';
 import 'package:local_ad_view/src/modules/home/data/adapters/ad_adapter.dart';
-import 'package:local_ad_view/src/modules/home/interector/entities/ad_entity.dart';
+import 'package:local_ad_view/src/modules/home/interactor/entities/ad_entity.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class DashboardServiceImpl implements DashboardServiceInterface {

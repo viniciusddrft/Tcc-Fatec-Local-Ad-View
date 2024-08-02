@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../interector/entities/ad_entity.dart';
+import '../../../interactor/entities/ad_entity.dart';
 
 class ImageAdWidget extends StatelessWidget {
   const ImageAdWidget({super.key, required this.adEntity});

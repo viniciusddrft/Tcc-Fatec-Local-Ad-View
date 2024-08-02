@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:local_ad_view/src/modules/home/data/adapters/ad_adapter.dart';
-import 'package:local_ad_view/src/modules/home/interector/entities/ad_entity.dart';
-import 'package:local_ad_view/src/modules/home/interector/home_state.dart';
-import 'package:local_ad_view/src/modules/home/interector/interface/home_service_interface.dart';
+import 'package:local_ad_view/src/modules/home/interactor/entities/ad_entity.dart';
+import 'package:local_ad_view/src/modules/home/interactor/home_state.dart';
+import 'package:local_ad_view/src/modules/home/interactor/interface/home_service_interface.dart';
 
 class HomeServiceImpl implements HomeServiceInterface {
   @override

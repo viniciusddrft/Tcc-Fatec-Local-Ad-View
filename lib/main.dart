@@ -3,7 +3,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'src/app_module.dart';
 import 'firebase_options.dart';
-import 'src/shared/theme/themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +19,39 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      theme: lightTheme,
+      theme: ThemeData(
+        useMaterial3: true,
+        brightness: Brightness.light,
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(color: Colors.white, fontSize: 30),
+          backgroundColor: Colors.deepPurple,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+            ),
+            textStyle: const TextStyle(fontSize: 20),
+            foregroundColor: Colors.white,
+          ),
+        ),
+        buttonTheme: const ButtonThemeData(
+          textTheme: ButtonTextTheme.primary,
+          buttonColor: Colors.deepPurple,
+        ),
+        colorScheme: const ColorScheme(
+          onSurface: Color(0xfffbfbfb),
+          brightness: Brightness.light,
+          error: Colors.deepPurple,
+          surfaceContainerHighest: Colors.black,
+          onError: Colors.red,
+          onPrimary: Colors.deepPurple,
+          onSecondary: Colors.deepPurple,
+          primary: Colors.black,
+          secondary: Colors.deepPurple,
+          surface: Colors.deepPurple,
+        ),
+      ),
       debugShowCheckedModeBanner: false,
       routerConfig: Modular.routerConfig,
     );

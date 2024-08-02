@@ -1,4 +1,4 @@
-import 'package:local_ad_view/src/modules/login/interector/login_state.dart';
+import 'package:local_ad_view/src/modules/login/interactor/login_state.dart';
 
 abstract interface class LoginServiceInterface {
   Future<LoginState> login(String email, String password);

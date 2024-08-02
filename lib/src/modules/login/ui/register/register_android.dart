@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:local_ad_view/src/modules/login/interector/login_interector.dart';
-import '../../interector/login_state.dart';
+import 'package:local_ad_view/src/modules/login/interactor/login_interactor.dart';
+import '../../interactor/login_state.dart';
 
 class RegisterAndroid extends StatefulWidget {
   const RegisterAndroid({super.key});
@@ -11,7 +11,7 @@ class RegisterAndroid extends StatefulWidget {
 }
 
 class _RegisterAndroidState extends State<RegisterAndroid> {
-  final _loginInterector = Modular.get<LoginInterector>();
+  final _logininteractor = Modular.get<Logininteractor>();
   final _emailController = TextEditingController();
   final _tokenController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -23,8 +23,8 @@ class _RegisterAndroidState extends State<RegisterAndroid> {
 
   @override
   void initState() {
-    _loginInterector.addListener(() {
-      if (_loginInterector.value is RegisteredSuccess) {
+    _logininteractor.addListener(() {
+      if (_logininteractor.value is RegisteredSuccess) {
         showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
@@ -39,7 +39,7 @@ class _RegisterAndroidState extends State<RegisterAndroid> {
 
         Future.delayed(const Duration(seconds: 2),
             () => Modular.to.navigate('/login/login'));
-      } else if (_loginInterector.value is LoginFailed) {
+      } else if (_logininteractor.value is LoginFailed) {
         showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
@@ -60,7 +60,7 @@ class _RegisterAndroidState extends State<RegisterAndroid> {
   void dispose() {
     _passwordController.dispose();
     _emailController.dispose();
-    _loginInterector.dispose();
+    _logininteractor.dispose();
     _tokenController.dispose();
     _focusNodeEmail.dispose();
     _focusNodePassword.dispose();
@@ -77,7 +77,7 @@ class _RegisterAndroidState extends State<RegisterAndroid> {
         centerTitle: true,
       ),
       body: ValueListenableBuilder(
-        valueListenable: _loginInterector,
+        valueListenable: _logininteractor,
         builder: (context, value, child) => SingleChildScrollView(
           child: Center(
             child: Form(
@@ -173,7 +173,7 @@ class _RegisterAndroidState extends State<RegisterAndroid> {
                           _focusNodeEmail.unfocus();
                           _focusNodeEmail.unfocus();
                           if (_formKey.currentState!.validate()) {
-                            _loginInterector.register(
+                            _logininteractor.register(
                                 email: _emailController.text,
                                 password: _passwordController.text,
                                 token: _tokenController.text);

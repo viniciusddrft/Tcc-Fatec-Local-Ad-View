@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:local_ad_view/src/modules/dashboard/interector/dashboard_interector.dart';
-import 'package:local_ad_view/src/modules/dashboard/interector/dashboard_state.dart';
+import 'package:local_ad_view/src/modules/dashboard/interactor/dashboard_interactor.dart';
+import 'package:local_ad_view/src/modules/dashboard/interactor/dashboard_state.dart';
 
 class DashboardWeb extends StatefulWidget {
   const DashboardWeb({super.key});
@@ -11,14 +11,14 @@ class DashboardWeb extends StatefulWidget {
 }
 
 class _DashboardWebState extends State<DashboardWeb> {
-  final dashboardInterector = Modular.get<DashboardInterector>();
+  final dashboardinteractor = Modular.get<DashboardInteractor>();
 
   @override
   void initState() {
-    dashboardInterector.loadAds();
+    dashboardinteractor.loadAds();
 
-    dashboardInterector.addListener(() {
-      if (dashboardInterector.value is DashboardRemoveAdSuccess) {
+    dashboardinteractor.addListener(() {
+      if (dashboardinteractor.value is DashboardRemoveAdSuccess) {
         showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
@@ -30,7 +30,7 @@ class _DashboardWebState extends State<DashboardWeb> {
               );
             },
             backgroundColor: Colors.grey);
-        dashboardInterector.loadAds();
+        dashboardinteractor.loadAds();
       }
     });
     super.initState();
@@ -43,7 +43,7 @@ class _DashboardWebState extends State<DashboardWeb> {
         title: const Text('Dashboard'),
       ),
       body: ValueListenableBuilder(
-        valueListenable: dashboardInterector,
+        valueListenable: dashboardinteractor,
         builder: (context, value, child) {
           if (value is DashboardLoading) {
             return const Center(
@@ -74,7 +74,7 @@ class _DashboardWebState extends State<DashboardWeb> {
                       ),
                       TextButton(
                         onPressed: () {
-                          dashboardInterector.removeAd(value.ads[index]);
+                          dashboardinteractor.removeAd(value.ads[index]);
                           Modular.to.pop();
                         },
                         child: const Text('Remover Anúncio'),

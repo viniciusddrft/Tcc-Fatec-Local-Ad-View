@@ -186,15 +186,13 @@ class _LoginMobileState extends State<LoginMobile> {
                             }
                           }
                         },
-                        child: value is! LoginLoading
-                            ? const Center(
-                                child: Text('Entrar'),
-                              )
-                            : const Center(
-                                child: CircularProgressIndicator(
+                        child: Center(
+                          child: value is! LoginLoading
+                              ? const Text('Entrar')
+                              : const CircularProgressIndicator(
                                   color: Colors.white,
                                 ),
-                              ),
+                        ),
                       ),
                     )),
                 Padding(

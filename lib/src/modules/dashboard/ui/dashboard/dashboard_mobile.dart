@@ -4,14 +4,14 @@ import 'package:local_ad_view/src/modules/dashboard/interactor/dashboard_interac
 import 'package:local_ad_view/src/modules/dashboard/interactor/dashboard_state.dart';
 import '../../../login/interactor/login_interactor.dart';
 
-class DashboardAndroid extends StatefulWidget {
-  const DashboardAndroid({super.key});
+class DashboardMobile extends StatefulWidget {
+  const DashboardMobile({super.key});
 
   @override
-  State<DashboardAndroid> createState() => _DashboardAndroidState();
+  State<DashboardMobile> createState() => _DashboardMobileState();
 }
 
-class _DashboardAndroidState extends State<DashboardAndroid> {
+class _DashboardMobileState extends State<DashboardMobile> {
   final dashboardinteractor = Modular.get<DashboardInteractor>();
   final logininteractor = Modular.get<Logininteractor>();
 

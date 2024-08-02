@@ -6,14 +6,14 @@ import 'package:local_ad_view/src/modules/dashboard/interactor/dashboard_interac
 import 'package:local_ad_view/src/modules/dashboard/interactor/dashboard_state.dart';
 import 'package:local_ad_view/src/modules/login/interactor/login_interactor.dart';
 
-class OnboardingAddAdAndroid extends StatefulWidget {
-  const OnboardingAddAdAndroid({super.key});
+class OnboardingAddAdMobile extends StatefulWidget {
+  const OnboardingAddAdMobile({super.key});
 
   @override
-  State<OnboardingAddAdAndroid> createState() => _OnboardingAddAdAndroidState();
+  State<OnboardingAddAdMobile> createState() => _OnboardingAddAdMobileState();
 }
 
-class _OnboardingAddAdAndroidState extends State<OnboardingAddAdAndroid> {
+class _OnboardingAddAdMobileState extends State<OnboardingAddAdMobile> {
   final image = ValueNotifier<File?>(null);
   final image2 = ValueNotifier<File?>(null);
   final hasTwoImages = ValueNotifier<bool>(false);

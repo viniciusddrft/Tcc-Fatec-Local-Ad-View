@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     if (!kIsWeb) {
-      Modular.to.navigate('/login/login');
+      Modular.to.pushReplacementNamed('/login/login');
     } else {
       homeinteractor.loadAds();
       Timer.periodic(const Duration(minutes: 5),

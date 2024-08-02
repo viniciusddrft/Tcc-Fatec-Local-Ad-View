@@ -23,7 +23,7 @@ class _LoginWebState extends State<LoginWeb> {
     loginInteretor.checkUserAuthentication();
     loginInteretor.addListener(() {
       if (loginInteretor.value is LoggedSuccess) {
-        Modular.to.navigate('/dashboard/dashboard');
+        Modular.to.pushNamed('/dashboard/dashboard');
       }
     });
     super.initState();
@@ -43,6 +43,7 @@ class _LoginWebState extends State<LoginWeb> {
     final Size size = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Login'),
         centerTitle: true,

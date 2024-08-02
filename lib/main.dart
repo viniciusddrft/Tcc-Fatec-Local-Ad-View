@@ -35,10 +35,6 @@ class MyApp extends StatelessWidget {
             foregroundColor: Colors.white,
           ),
         ),
-        buttonTheme: const ButtonThemeData(
-          textTheme: ButtonTextTheme.primary,
-          buttonColor: Colors.deepPurple,
-        ),
         colorScheme: const ColorScheme(
           onSurface: Color(0xfffbfbfb),
           brightness: Brightness.light,

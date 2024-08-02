@@ -11,7 +11,7 @@ class RegisterWeb extends StatefulWidget {
 }
 
 class _RegisterWebState extends State<RegisterWeb> {
-  final loginInteretor = Modular.get<Logininteractor>();
+  final loginInterator = Modular.get<Logininteractor>();
   final emailController = TextEditingController();
   final tokenController = TextEditingController();
   final passwordController = TextEditingController();
@@ -21,8 +21,8 @@ class _RegisterWebState extends State<RegisterWeb> {
 
   @override
   void initState() {
-    loginInteretor.addListener(() {
-      if (loginInteretor.value is RegisteredSuccess) {
+    loginInterator.addListener(() {
+      if (loginInterator.value is RegisteredSuccess) {
         showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
@@ -37,7 +37,7 @@ class _RegisterWebState extends State<RegisterWeb> {
 
         Future.delayed(const Duration(seconds: 1),
             () => Modular.to.navigate('/login/login'));
-      } else if (loginInteretor.value is LoginFailed) {
+      } else if (loginInterator.value is LoginFailed) {
         showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
@@ -58,7 +58,7 @@ class _RegisterWebState extends State<RegisterWeb> {
   void dispose() {
     passwordController.dispose();
     emailController.dispose();
-    loginInteretor.dispose();
+    loginInterator.dispose();
     tokenController.dispose();
     _focusNodeEmail.dispose();
     _focusNodePassword.dispose();
@@ -74,7 +74,7 @@ class _RegisterWebState extends State<RegisterWeb> {
         centerTitle: true,
       ),
       body: ValueListenableBuilder(
-        valueListenable: loginInteretor,
+        valueListenable: loginInterator,
         builder: (context, value, child) => Center(
           child: Form(
             child: FractionallySizedBox(
@@ -131,7 +131,7 @@ class _RegisterWebState extends State<RegisterWeb> {
                       onPressed: () {
                         _focusNodeEmail.unfocus();
                         _focusNodeEmail.unfocus();
-                        loginInteretor.register(
+                        loginInterator.register(
                             email: emailController.text,
                             password: passwordController.text,
                             token: tokenController.text);

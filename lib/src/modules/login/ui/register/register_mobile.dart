@@ -3,14 +3,14 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:local_ad_view/src/modules/login/interactor/login_interactor.dart';
 import '../../interactor/login_state.dart';
 
-class RegisterAndroid extends StatefulWidget {
-  const RegisterAndroid({super.key});
+class RegisterMobile extends StatefulWidget {
+  const RegisterMobile({super.key});
 
   @override
-  State<RegisterAndroid> createState() => _RegisterAndroidState();
+  State<RegisterMobile> createState() => _RegisterMobileState();
 }
 
-class _RegisterAndroidState extends State<RegisterAndroid> {
+class _RegisterMobileState extends State<RegisterMobile> {
   final _logininteractor = Modular.get<Logininteractor>();
   final _emailController = TextEditingController();
   final _tokenController = TextEditingController();
@@ -38,7 +38,7 @@ class _RegisterAndroidState extends State<RegisterAndroid> {
             backgroundColor: Colors.grey);
 
         Future.delayed(const Duration(seconds: 2),
-            () => Modular.to.navigate('/login/login'));
+            () => Modular.to.pushNamed('/login/login'));
       } else if (_logininteractor.value is LoginFailed) {
         showModalBottomSheet<void>(
             context: context,

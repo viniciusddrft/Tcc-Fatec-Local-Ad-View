@@ -33,11 +33,14 @@ class _OnboardingAddAdMobileState extends State<OnboardingAddAdMobile> {
               return const SizedBox(
                 height: 200,
                 child: Center(
-                  child: Text('Anúncio adicionado com successo!'),
+                  child: Text(
+                    'Anúncio adicionado com successo!',
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
               );
             },
-            backgroundColor: Colors.grey);
+            backgroundColor: Colors.white);
 
         Future.delayed(
           const Duration(seconds: 1),
@@ -49,19 +52,9 @@ class _OnboardingAddAdMobileState extends State<OnboardingAddAdMobile> {
   }
 
   @override
-  void dispose() {
-    hasTwoImages.dispose();
-    image.dispose();
-    image2.dispose();
-    dashboardinteractor.dispose();
-    secondsController.dispose();
-    secondsFocus.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Adicionar Anúncio'),
         automaticallyImplyLeading: false,
@@ -72,7 +65,9 @@ class _OnboardingAddAdMobileState extends State<OnboardingAddAdMobile> {
         builder: (context, child) {
           if (dashboardinteractor.value is DashboardLoading) {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                color: Colors.deepPurple,
+              ),
             );
           } else if (dashboardinteractor.value is DashboardFailed) {
             return Center(
@@ -94,7 +89,10 @@ class _OnboardingAddAdMobileState extends State<OnboardingAddAdMobile> {
                           value: false,
                           groupValue: hasTwoImages.value,
                           onChanged: (value) => hasTwoImages.value = false,
-                          child: const Text('1 Imagem'),
+                          child: const Text(
+                            '1 Imagem',
+                            style: TextStyle(color: Colors.black),
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -104,7 +102,10 @@ class _OnboardingAddAdMobileState extends State<OnboardingAddAdMobile> {
                           value: true,
                           groupValue: hasTwoImages.value,
                           onChanged: (value) => hasTwoImages.value = true,
-                          child: const Text('2 Imagens'),
+                          child: const Text(
+                            '2 Imagens',
+                            style: TextStyle(color: Colors.black),
+                          ),
                         ),
                       )
                     ],
@@ -128,7 +129,10 @@ class _OnboardingAddAdMobileState extends State<OnboardingAddAdMobile> {
                       showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title: const Text('Deseja remover a imagem?'),
+                          title: const Text(
+                            'Deseja remover a imagem?',
+                            style: TextStyle(color: Colors.black),
+                          ),
                           actions: [
                             TextButton(
                               onPressed: () => Modular.to.pop(),
@@ -142,7 +146,10 @@ class _OnboardingAddAdMobileState extends State<OnboardingAddAdMobile> {
                                 image.value = null;
                                 Modular.to.pop();
                               },
-                              child: const Text('Remover Imagem'),
+                              child: const Text(
+                                'Remover Imagem',
+                                style: TextStyle(color: Colors.black),
+                              ),
                             ),
                           ],
                         ),
@@ -160,11 +167,17 @@ class _OnboardingAddAdMobileState extends State<OnboardingAddAdMobile> {
                             children: image.value == null
                                 ? [
                                     const Icon(Icons.upload_rounded),
-                                    const Text('Adiciona uma imagem.')
+                                    const Text(
+                                      'Adiciona uma imagem.',
+                                      style: TextStyle(color: Colors.black),
+                                    )
                                   ]
                                 : [
                                     const Icon(Icons.done),
-                                    const Text('Imagem Adicionado!')
+                                    const Text(
+                                      'Imagem Adicionado!',
+                                      style: TextStyle(color: Colors.black),
+                                    )
                                   ]),
                       ),
                     ),
@@ -194,7 +207,10 @@ class _OnboardingAddAdMobileState extends State<OnboardingAddAdMobile> {
                               showDialog(
                                 context: context,
                                 builder: (context) => AlertDialog(
-                                  title: const Text('Deseja remover a imagem?'),
+                                  title: const Text(
+                                    'Deseja remover a imagem?',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                   actions: [
                                     TextButton(
                                       onPressed: () => Modular.to.pop(),
@@ -208,7 +224,10 @@ class _OnboardingAddAdMobileState extends State<OnboardingAddAdMobile> {
                                         image2.value = null;
                                         Modular.to.pop();
                                       },
-                                      child: const Text('Remover Imagem'),
+                                      child: const Text(
+                                        'Remover Imagem',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -226,11 +245,19 @@ class _OnboardingAddAdMobileState extends State<OnboardingAddAdMobile> {
                                     children: image2.value == null
                                         ? [
                                             const Icon(Icons.upload_rounded),
-                                            const Text('Adiciona uma imagem.')
+                                            const Text(
+                                              'Adiciona uma imagem.',
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            )
                                           ]
                                         : [
                                             const Icon(Icons.done),
-                                            const Text('Imagem Adicionado!')
+                                            const Text(
+                                              'Imagem Adicionado!',
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            )
                                           ]),
                               ),
                             ),
@@ -314,5 +341,16 @@ class _OnboardingAddAdMobileState extends State<OnboardingAddAdMobile> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    hasTwoImages.dispose();
+    image.dispose();
+    image2.dispose();
+    dashboardinteractor.dispose();
+    secondsController.dispose();
+    secondsFocus.dispose();
+    super.dispose();
   }
 }

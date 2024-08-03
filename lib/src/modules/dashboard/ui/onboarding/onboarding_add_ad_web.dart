@@ -31,11 +31,14 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
               return const SizedBox(
                 height: 200,
                 child: Center(
-                  child: Text('Anúncio adicionado com successo!'),
+                  child: Text(
+                    'Anúncio adicionado com successo!',
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
               );
             },
-            backgroundColor: Colors.grey);
+            backgroundColor: Colors.white);
 
         Future.delayed(const Duration(seconds: 1),
             () => Modular.to.pushNamed('/dashboard/dashboard'));

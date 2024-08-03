@@ -41,12 +41,6 @@ class _DashboardMobileState extends State<DashboardMobile> {
   }
 
   @override
-  void dispose() {
-    dashboardinteractor.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -200,5 +194,11 @@ class _DashboardMobileState extends State<DashboardMobile> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    dashboardinteractor.dispose();
+    super.dispose();
   }
 }

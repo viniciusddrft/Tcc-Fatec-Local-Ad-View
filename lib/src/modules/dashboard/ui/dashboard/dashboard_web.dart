@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:local_ad_view/src/modules/dashboard/interactor/dashboard_interactor.dart';
 import 'package:local_ad_view/src/modules/dashboard/interactor/dashboard_state.dart';
+import 'package:local_ad_view/src/modules/login/interactor/login_interactor.dart';
 
 class DashboardWeb extends StatefulWidget {
   const DashboardWeb({super.key});
@@ -12,11 +13,11 @@ class DashboardWeb extends StatefulWidget {
 
 class _DashboardWebState extends State<DashboardWeb> {
   final dashboardinteractor = Modular.get<DashboardInteractor>();
+  final logininteractor = Modular.get<Logininteractor>();
 
   @override
   void initState() {
     dashboardinteractor.loadAds();
-
     dashboardinteractor.addListener(() {
       if (dashboardinteractor.value is DashboardRemoveAdSuccess) {
         showModalBottomSheet<void>(
@@ -42,6 +43,7 @@ class _DashboardWebState extends State<DashboardWeb> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Dashboard'),
       ),
@@ -63,28 +65,56 @@ class _DashboardWebState extends State<DashboardWeb> {
                   mainAxisExtent: 250),
               itemCount: value.ads.length,
               itemBuilder: (BuildContext context, int index) => GestureDetector(
-                onTap: () => showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text('Deseja remover esse anúncio?'),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Modular.to.pop(),
-                        child: const Text(
-                          'Cancelar',
-                          style: TextStyle(color: Colors.red),
+                onTap: () {
+                  if (logininteractor.user!.isAdm ||
+                      logininteractor.user!.user == value.ads[index].creator) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          backgroundColor: Colors.white,
+                          title: const Text(
+                            'Deseja remover esse anúncio?',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Modular.to.pop(),
+                              child: const Text(
+                                'Cancelar',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                dashboardinteractor.removeAd(value.ads[index]);
+                                Modular.to.pop();
+                              },
+                              child: const Text('Remover Anúncio'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        backgroundColor: Colors.white,
+                        title: const Text(
+                          'Sem permissão para remover esse anúncio',
+                          style: TextStyle(color: Colors.black),
                         ),
+                        actions: [
+                          TextButton(
+                            onPressed: Modular.to.pop,
+                            child: const Text('Sair'),
+                          ),
+                        ],
                       ),
-                      TextButton(
-                        onPressed: () {
-                          dashboardinteractor.removeAd(value.ads[index]);
-                          Modular.to.pop();
-                        },
-                        child: const Text('Remover Anúncio'),
-                      ),
-                    ],
-                  ),
-                ),
+                    );
+                  }
+                },
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius:
@@ -133,10 +163,16 @@ class _DashboardWebState extends State<DashboardWeb> {
                           child: Text(
                             value.ads[index].creator,
                             overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                         Text(
                           'Date: ${value.ads[index].date.toDate().toString().split(' ').first.replaceAll(r'-', '/')}',
+                          style: const TextStyle(
+                            color: Colors.black,
+                          ),
                         ),
                       ],
                     ),
@@ -158,5 +194,11 @@ class _DashboardWebState extends State<DashboardWeb> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    dashboardinteractor.dispose();
+    super.dispose();
   }
 }

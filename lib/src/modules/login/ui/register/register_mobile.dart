@@ -136,7 +136,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
                             padding: const EdgeInsets.only(top: 30, bottom: 30),
                             child: ValueListenableBuilder(
                               valueListenable: _isObfuscatePassword,
-                              builder: (context, value, child) => TextFormField(
+                              builder: (_, value, __) => TextFormField(
                                 controller: _passwordController,
                                 focusNode: _focusNodePassword,
                                 obscureText: _isObfuscatePassword.value,

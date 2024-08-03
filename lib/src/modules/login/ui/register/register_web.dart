@@ -119,56 +119,61 @@ class _RegisterWebState extends State<RegisterWeb> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 30, bottom: 60),
-                    child: TextFormField(
-                      controller: _passwordController,
-                      focusNode: _focusNodePassword,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      decoration: InputDecoration(
-                        labelText: 'Senha',
-                        labelStyle: const TextStyle(
+                    child: ValueListenableBuilder(
+                      valueListenable: _isObfuscatePassword,
+                      builder: (_, value, __) => TextFormField(
+                        controller: _passwordController,
+                        focusNode: _focusNodePassword,
+                        obscureText: _isObfuscatePassword.value,
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 14.0,
                           fontWeight: FontWeight.bold,
                         ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.deepPurple, width: 2.0),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
-                          ),
-                        ),
-                        focusedBorder: const OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.green, width: 2.0),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
-                          ),
-                        ),
-                        errorBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.red, width: 2.0),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
-                          ),
-                        ),
-                        focusedErrorBorder: const OutlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Colors.orange, width: 2.0),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(30),
-                          ),
-                        ),
-                        suffixIcon: GestureDetector(
-                          onTap: () => _isObfuscatePassword.value =
-                              !_isObfuscatePassword.value,
-                          child: Icon(
-                            _isObfuscatePassword.value
-                                ? Icons.visibility_off
-                                : Icons.visibility,
+                        decoration: InputDecoration(
+                          labelText: 'Senha',
+                          labelStyle: const TextStyle(
                             color: Colors.black,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.deepPurple, width: 2.0),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30),
+                            ),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.green, width: 2.0),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30),
+                            ),
+                          ),
+                          errorBorder: const OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.red, width: 2.0),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30),
+                            ),
+                          ),
+                          focusedErrorBorder: const OutlineInputBorder(
+                            borderSide:
+                                BorderSide(color: Colors.orange, width: 2.0),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30),
+                            ),
+                          ),
+                          suffixIcon: GestureDetector(
+                            onTap: () => _isObfuscatePassword.value =
+                                !_isObfuscatePassword.value,
+                            child: Icon(
+                              _isObfuscatePassword.value
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              color: Colors.black,
+                            ),
                           ),
                         ),
                       ),

@@ -11,7 +11,7 @@ class RegisterMobile extends StatefulWidget {
 }
 
 class _RegisterMobileState extends State<RegisterMobile> {
-  final _logininteractor = Modular.get<Logininteractor>();
+  final _loginInteractor = Modular.get<Logininteractor>();
   final _emailController = TextEditingController();
   final _tokenController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -23,8 +23,8 @@ class _RegisterMobileState extends State<RegisterMobile> {
 
   @override
   void initState() {
-    _logininteractor.addListener(() {
-      if (_logininteractor.value is RegisteredSuccess) {
+    _loginInteractor.addListener(() {
+      if (_loginInteractor.value is RegisteredSuccess) {
         showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
@@ -39,7 +39,7 @@ class _RegisterMobileState extends State<RegisterMobile> {
 
         Future.delayed(const Duration(seconds: 2),
             () => Modular.to.pushNamed('/login/login'));
-      } else if (_logininteractor.value is LoginFailed) {
+      } else if (_loginInteractor.value is LoginFailed) {
         showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
@@ -57,19 +57,6 @@ class _RegisterMobileState extends State<RegisterMobile> {
   }
 
   @override
-  void dispose() {
-    _passwordController.dispose();
-    _emailController.dispose();
-    _logininteractor.dispose();
-    _tokenController.dispose();
-    _focusNodeEmail.dispose();
-    _focusNodePassword.dispose();
-    _focusNodeToken.dispose();
-    _isObfuscatePassword.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -78,8 +65,8 @@ class _RegisterMobileState extends State<RegisterMobile> {
         centerTitle: true,
       ),
       body: ValueListenableBuilder(
-        valueListenable: _logininteractor,
-        builder: (context, value, child) => SingleChildScrollView(
+        valueListenable: _loginInteractor,
+        builder: (_, value, __) => SingleChildScrollView(
           child: Center(
             child: Form(
               key: _formKey,
@@ -276,14 +263,14 @@ class _RegisterMobileState extends State<RegisterMobile> {
                           width: 250,
                           height: 50,
                           child: ValueListenableBuilder(
-                            valueListenable: _logininteractor,
-                            builder: (context, value, child) => ElevatedButton(
+                            valueListenable: _loginInteractor,
+                            builder: (_, value, __) => ElevatedButton(
                               onPressed: () {
                                 if (value is! LoginLoading) {
                                   _focusNodeEmail.unfocus();
                                   _focusNodeEmail.unfocus();
                                   if (_formKey.currentState!.validate()) {
-                                    _logininteractor.register(
+                                    _loginInteractor.register(
                                         email: _emailController.text,
                                         password: _passwordController.text,
                                         token: _tokenController.text);
@@ -310,5 +297,18 @@ class _RegisterMobileState extends State<RegisterMobile> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _emailController.dispose();
+    _loginInteractor.dispose();
+    _tokenController.dispose();
+    _focusNodeEmail.dispose();
+    _focusNodePassword.dispose();
+    _focusNodeToken.dispose();
+    _isObfuscatePassword.dispose();
+    super.dispose();
   }
 }

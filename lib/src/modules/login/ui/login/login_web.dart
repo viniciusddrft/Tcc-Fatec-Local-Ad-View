@@ -12,7 +12,7 @@ class LoginWeb extends StatefulWidget {
 }
 
 class _LoginWebState extends State<LoginWeb> {
-  final loginInteretor = Modular.get<Logininteractor>();
+  final _loginInteractor = Modular.get<Logininteractor>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final _focusNodeEmail = FocusNode();
@@ -20,22 +20,13 @@ class _LoginWebState extends State<LoginWeb> {
 
   @override
   void initState() {
-    loginInteretor.checkUserAuthentication();
-    loginInteretor.addListener(() {
-      if (loginInteretor.value is LoggedSuccess) {
-        Modular.to.pushNamed('/dashboard/dashboard');
+    _loginInteractor.checkUserAuthentication();
+    _loginInteractor.addListener(() {
+      if (_loginInteractor.value is LoggedSuccess) {
+        Modular.to.navigate('/dashboard/dashboard');
       }
     });
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    passwordController.dispose();
-    emailController.dispose();
-    _focusNodeEmail.dispose();
-    _focusNodePassword.dispose();
-    super.dispose();
   }
 
   @override
@@ -61,9 +52,39 @@ class _LoginWebState extends State<LoginWeb> {
                 child: TextFormField(
                   controller: emailController,
                   focusNode: _focusNodeEmail,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                   decoration: const InputDecoration(
                     labelText: 'E-mail',
-                    border: OutlineInputBorder(
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Colors.deepPurple, width: 2.0),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.green, width: 2.0),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red, width: 2.0),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30),
+                      ),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.orange, width: 2.0),
                       borderRadius: BorderRadius.all(
                         Radius.circular(30),
                       ),
@@ -78,9 +99,40 @@ class _LoginWebState extends State<LoginWeb> {
                   child: TextFormField(
                     controller: passwordController,
                     focusNode: _focusNodePassword,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                     decoration: const InputDecoration(
                       labelText: 'Senha',
-                      border: OutlineInputBorder(
+                      labelStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.deepPurple, width: 2.0),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.green, width: 2.0),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red, width: 2.0),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.orange, width: 2.0),
                         borderRadius: BorderRadius.all(
                           Radius.circular(30),
                         ),
@@ -94,13 +146,18 @@ class _LoginWebState extends State<LoginWeb> {
                 child: SizedBox(
                   width: size.width * 0.3,
                   height: size.height * 0.06,
-                  child: ElevatedButton(
-                    onPressed: () => loginInteretor.login(
-                        email: emailController.text,
-                        password: passwordController.text),
-                    child: const Center(
-                      child: Text(
-                        'Entrar',
+                  child: ValueListenableBuilder(
+                    valueListenable: _loginInteractor,
+                    builder: (_, value, __) => ElevatedButton(
+                      onPressed: () => _loginInteractor.login(
+                          email: emailController.text,
+                          password: passwordController.text),
+                      child: Center(
+                        child: value is! LoginLoading
+                            ? const Text('Entrar')
+                            : const CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
                       ),
                     ),
                   ),
@@ -122,5 +179,14 @@ class _LoginWebState extends State<LoginWeb> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    emailController.dispose();
+    _focusNodeEmail.dispose();
+    _focusNodePassword.dispose();
+    super.dispose();
   }
 }

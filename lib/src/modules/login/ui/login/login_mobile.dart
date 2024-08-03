@@ -31,16 +31,6 @@ class _LoginMobileState extends State<LoginMobile> {
   }
 
   @override
-  void dispose() {
-    _passwordController.dispose();
-    _emailController.dispose();
-    _focusNodeEmail.dispose();
-    _focusNodePassword.dispose();
-    _isObfuscatePassword.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -172,29 +162,30 @@ class _LoginMobileState extends State<LoginMobile> {
                   ),
                 ),
                 SizedBox(
-                    width: 250,
-                    height: 50,
-                    child: ValueListenableBuilder(
-                      valueListenable: _logininteractor,
-                      builder: (context, value, child) => ElevatedButton(
-                        onPressed: () {
-                          if (value is! LoginLoading) {
-                            if (_formKey.currentState!.validate()) {
-                              _logininteractor.login(
-                                  email: _emailController.text,
-                                  password: _passwordController.text);
-                            }
+                  width: 250,
+                  height: 50,
+                  child: ValueListenableBuilder(
+                    valueListenable: _logininteractor,
+                    builder: (_, value, __) => ElevatedButton(
+                      onPressed: () {
+                        if (value is! LoginLoading) {
+                          if (_formKey.currentState!.validate()) {
+                            _logininteractor.login(
+                                email: _emailController.text,
+                                password: _passwordController.text);
                           }
-                        },
-                        child: Center(
-                          child: value is! LoginLoading
-                              ? const Text('Entrar')
-                              : const CircularProgressIndicator(
-                                  color: Colors.white,
-                                ),
-                        ),
+                        }
+                      },
+                      child: Center(
+                        child: value is! LoginLoading
+                            ? const Text('Entrar')
+                            : const CircularProgressIndicator(
+                                color: Colors.white,
+                              ),
                       ),
-                    )),
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: TextButton(
@@ -208,5 +199,15 @@ class _LoginMobileState extends State<LoginMobile> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _emailController.dispose();
+    _focusNodeEmail.dispose();
+    _focusNodePassword.dispose();
+    _isObfuscatePassword.dispose();
+    super.dispose();
   }
 }

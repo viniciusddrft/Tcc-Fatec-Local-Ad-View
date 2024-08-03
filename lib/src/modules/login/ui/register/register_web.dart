@@ -11,18 +11,20 @@ class RegisterWeb extends StatefulWidget {
 }
 
 class _RegisterWebState extends State<RegisterWeb> {
-  final loginInterator = Modular.get<Logininteractor>();
-  final emailController = TextEditingController();
-  final tokenController = TextEditingController();
-  final passwordController = TextEditingController();
+  final _loginInterator = Modular.get<Logininteractor>();
+  final _emailController = TextEditingController();
+  final _tokenController = TextEditingController();
+  final _passwordController = TextEditingController();
   final _focusNodeEmail = FocusNode();
   final _focusNodePassword = FocusNode();
   final _focusNodeToken = FocusNode();
+  final _formKey = GlobalKey<FormState>();
+  final _isObfuscatePassword = ValueNotifier<bool>(true);
 
   @override
   void initState() {
-    loginInterator.addListener(() {
-      if (loginInterator.value is RegisteredSuccess) {
+    _loginInterator.addListener(() {
+      if (_loginInterator.value is RegisteredSuccess) {
         showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
@@ -37,7 +39,7 @@ class _RegisterWebState extends State<RegisterWeb> {
 
         Future.delayed(const Duration(seconds: 1),
             () => Modular.to.navigate('/login/login'));
-      } else if (loginInterator.value is LoginFailed) {
+      } else if (_loginInterator.value is LoginFailed) {
         showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
@@ -55,39 +57,60 @@ class _RegisterWebState extends State<RegisterWeb> {
   }
 
   @override
-  void dispose() {
-    passwordController.dispose();
-    emailController.dispose();
-    loginInterator.dispose();
-    tokenController.dispose();
-    _focusNodeEmail.dispose();
-    _focusNodePassword.dispose();
-    _focusNodeToken.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Cadastro'),
         centerTitle: true,
       ),
       body: ValueListenableBuilder(
-        valueListenable: loginInterator,
-        builder: (context, value, child) => Center(
+        valueListenable: _loginInterator,
+        builder: (_, value, __) => Center(
           child: Form(
+            key: _formKey,
             child: FractionallySizedBox(
               widthFactor: 0.6,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextFormField(
-                    controller: emailController,
+                    controller: _emailController,
                     focusNode: _focusNodeEmail,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                     decoration: const InputDecoration(
                       labelText: 'E-mail',
-                      border: OutlineInputBorder(
+                      labelStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.deepPurple, width: 2.0),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.green, width: 2.0),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                      errorBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.red, width: 2.0),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(30),
+                        ),
+                      ),
+                      focusedErrorBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: Colors.orange, width: 2.0),
                         borderRadius: BorderRadius.all(
                           Radius.circular(30),
                         ),
@@ -97,13 +120,55 @@ class _RegisterWebState extends State<RegisterWeb> {
                   Padding(
                     padding: const EdgeInsets.only(top: 30, bottom: 60),
                     child: TextFormField(
-                      controller: passwordController,
+                      controller: _passwordController,
                       focusNode: _focusNodePassword,
-                      decoration: const InputDecoration(
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      decoration: InputDecoration(
                         labelText: 'Senha',
-                        border: OutlineInputBorder(
+                        labelStyle: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.deepPurple, width: 2.0),
                           borderRadius: BorderRadius.all(
                             Radius.circular(30),
+                          ),
+                        ),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.green, width: 2.0),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
+                        errorBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red, width: 2.0),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
+                        focusedErrorBorder: const OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.orange, width: 2.0),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
+                        suffixIcon: GestureDetector(
+                          onTap: () => _isObfuscatePassword.value =
+                              !_isObfuscatePassword.value,
+                          child: Icon(
+                            _isObfuscatePassword.value
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Colors.black,
                           ),
                         ),
                       ),
@@ -112,11 +177,43 @@ class _RegisterWebState extends State<RegisterWeb> {
                   Padding(
                     padding: const EdgeInsets.only(top: 30, bottom: 60),
                     child: TextFormField(
-                      controller: tokenController,
+                      controller: _tokenController,
                       focusNode: _focusNodeToken,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                      ),
                       decoration: const InputDecoration(
                         labelText: 'Token',
-                        border: OutlineInputBorder(
+                        labelStyle: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.deepPurple, width: 2.0),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.green, width: 2.0),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red, width: 2.0),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(30),
+                          ),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Colors.orange, width: 2.0),
                           borderRadius: BorderRadius.all(
                             Radius.circular(30),
                           ),
@@ -127,17 +224,28 @@ class _RegisterWebState extends State<RegisterWeb> {
                   SizedBox(
                     width: 250,
                     height: 50,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        _focusNodeEmail.unfocus();
-                        _focusNodeEmail.unfocus();
-                        loginInterator.register(
-                            email: emailController.text,
-                            password: passwordController.text,
-                            token: tokenController.text);
-                      },
-                      child: const Center(
-                        child: Text('Entrar'),
+                    child: ValueListenableBuilder(
+                      valueListenable: _loginInterator,
+                      builder: (_, value, __) => ElevatedButton(
+                        onPressed: () {
+                          if (value is! LoginLoading) {
+                            _focusNodeEmail.unfocus();
+                            _focusNodeEmail.unfocus();
+                            if (_formKey.currentState!.validate()) {
+                              _loginInterator.register(
+                                  email: _emailController.text,
+                                  password: _passwordController.text,
+                                  token: _tokenController.text);
+                            }
+                          }
+                        },
+                        child: Center(
+                          child: value is! LoginLoading
+                              ? const Text('Criar')
+                              : const CircularProgressIndicator(
+                                  color: Colors.white,
+                                ),
+                        ),
                       ),
                     ),
                   ),
@@ -148,5 +256,18 @@ class _RegisterWebState extends State<RegisterWeb> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _passwordController.dispose();
+    _emailController.dispose();
+    _loginInterator.dispose();
+    _tokenController.dispose();
+    _focusNodeEmail.dispose();
+    _focusNodePassword.dispose();
+    _focusNodeToken.dispose();
+    _isObfuscatePassword.dispose();
+    super.dispose();
   }
 }

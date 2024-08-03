@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../interactor/entities/ad_entity.dart';
 
 class ImageAdWidget extends StatelessWidget {

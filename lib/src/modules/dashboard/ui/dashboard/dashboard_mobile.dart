@@ -26,11 +26,14 @@ class _DashboardMobileState extends State<DashboardMobile> {
               return const SizedBox(
                 height: 200,
                 child: Center(
-                  child: Text('Anúncio removido com successo!'),
+                  child: Text(
+                    'Anúncio removido com successo!',
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
               );
             },
-            backgroundColor: Colors.grey);
+            backgroundColor: Colors.white);
         dashboardinteractor.loadAds();
       }
     });

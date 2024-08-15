@@ -46,6 +46,11 @@ class _DashboardWebState extends State<DashboardWeb> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Dashboard'),
+        actions: [
+          IconButton(
+              onPressed: Modular.get<Logininteractor>().logout,
+              icon: const Icon(Icons.logout))
+        ],
       ),
       body: ValueListenableBuilder(
         valueListenable: dashboardinteractor,

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:local_ad_view/src/modules/login/interactor/entities/user.dart';
 import 'package:local_ad_view/src/modules/login/interactor/interface/login_service_interface.dart';
 import 'package:local_ad_view/src/modules/login/interactor/login_state.dart';
@@ -10,6 +11,7 @@ class Logininteractor extends ValueNotifier<LoginState> {
 
   final LoginServiceInterface _loginService;
   static UserEntity? _user;
+  bool isLogout = false;
 
   UserEntity? get user => _user;
 
@@ -31,15 +33,24 @@ class Logininteractor extends ValueNotifier<LoginState> {
     value = const LoginLoading();
     value = await _loginService.login(email.trim(), password.trim());
     if (value is LoggedSuccess) {
+      isLogout = false;
       _user = (value as LoggedSuccess).user;
     }
   }
 
   void checkUserAuthentication() async {
-    value = const LoginLoading();
-    value = await _loginService.checkUserAuthentication();
-    if (value is LoggedSuccess) {
-      _user = (value as LoggedSuccess).user;
+    if (!isLogout) {
+      value = const LoginLoading();
+      value = await _loginService.checkUserAuthentication();
+      if (value is LoggedSuccess) {
+        _user = (value as LoggedSuccess).user;
+      }
     }
+  }
+
+  void logout() async {
+    value = const LoginInitial();
+    isLogout = true;
+    Modular.to.pushReplacementNamed('/login/login');
   }
 }

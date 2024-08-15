@@ -7,8 +7,8 @@ import 'ui/login/login_page.dart';
 
 class LoginModule extends Module {
   @override
-  void binds(Injector i) {
-    i.add(Logininteractor.new);
+  void exportedBinds(Injector i) {
+    i.addSingleton(Logininteractor.new);
     i.add<LoginServiceInterface>(LoginServiceImpl.new);
   }
 

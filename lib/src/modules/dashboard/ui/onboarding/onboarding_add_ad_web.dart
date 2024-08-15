@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:local_ad_view/src/modules/login/interactor/login_interactor.dart';
 import '../../interactor/dashboard_interactor.dart';
 import '../../interactor/dashboard_state.dart';
 
@@ -17,6 +18,7 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
   final image2 = ValueNotifier<File?>(null);
   final hasTwoImages = ValueNotifier<bool>(false);
   final dashboardinteractor = Modular.get<DashboardInteractor>();
+  final logininteractor = Modular.get<Logininteractor>();
   final secondsController = TextEditingController();
   final secondsFocus = FocusNode();
   final _formKey = GlobalKey<FormState>();
@@ -61,6 +63,7 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Adicionar Anúncio'),
       ),
@@ -74,8 +77,10 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
             );
           } else if (dashboardinteractor.value is DashboardFailed) {
             return Center(
-              child:
-                  Text((dashboardinteractor.value as DashboardFailed).message),
+              child: Text(
+                (dashboardinteractor.value as DashboardFailed).message,
+                style: const TextStyle(color: Colors.black),
+              ),
             );
           } else {
             return Column(
@@ -88,11 +93,20 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
                       SizedBox(
                         height: 50.0,
                         width: 150.0,
-                        child: RadioMenuButton<bool>(
-                          value: false,
-                          groupValue: hasTwoImages.value,
-                          onChanged: (value) => hasTwoImages.value = false,
-                          child: const Text('1 Imagem'),
+                        child: Theme(
+                          data: Theme.of(context).copyWith(
+                            radioTheme: RadioThemeData(
+                              fillColor: WidgetStateProperty.resolveWith<Color>(
+                                  (_) => Colors.black),
+                            ),
+                          ),
+                          child: RadioMenuButton<bool>(
+                            value: false,
+                            groupValue: hasTwoImages.value,
+                            onChanged: (value) => hasTwoImages.value = false,
+                            child: const Text('1 Imagem',
+                                style: TextStyle(color: Colors.black)),
+                          ),
                         ),
                       ),
                       Padding(
@@ -100,11 +114,21 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
                         child: SizedBox(
                           height: 50.0,
                           width: 150.0,
-                          child: RadioMenuButton<bool>(
-                            value: true,
-                            groupValue: hasTwoImages.value,
-                            onChanged: (value) => hasTwoImages.value = true,
-                            child: const Text('2 Imagens'),
+                          child: Theme(
+                            data: Theme.of(context).copyWith(
+                              radioTheme: RadioThemeData(
+                                fillColor:
+                                    WidgetStateProperty.resolveWith<Color>(
+                                        (_) => Colors.black),
+                              ),
+                            ),
+                            child: RadioMenuButton<bool>(
+                              value: true,
+                              groupValue: hasTwoImages.value,
+                              onChanged: (value) => hasTwoImages.value = true,
+                              child: const Text('2 Imagens',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
                           ),
                         ),
                       )
@@ -131,7 +155,10 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
-                              title: const Text('Deseja remover a imagem?'),
+                              title: const Text(
+                                'Deseja remover a imagem?',
+                                style: TextStyle(color: Colors.black),
+                              ),
                               actions: [
                                 TextButton(
                                   onPressed: () => Modular.to.pop(),
@@ -145,7 +172,10 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
                                     image.value = null;
                                     Modular.to.pop();
                                   },
-                                  child: const Text('Remover Imagem'),
+                                  child: const Text(
+                                    'Remover Imagem',
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                 ),
                               ],
                             ),
@@ -163,11 +193,17 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
                                 children: image.value == null
                                     ? [
                                         const Icon(Icons.upload_rounded),
-                                        const Text('Adiciona uma imagem.')
+                                        const Text(
+                                          'Adiciona uma imagem.',
+                                          style: TextStyle(color: Colors.black),
+                                        )
                                       ]
                                     : [
                                         const Icon(Icons.done),
-                                        const Text('Imagem Adicionado!')
+                                        const Text(
+                                          'Imagem Adicionado!',
+                                          style: TextStyle(color: Colors.black),
+                                        )
                                       ]),
                           ),
                         ),
@@ -184,14 +220,11 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
                                 onTap: () async {
                                   final FilePickerResult? result =
                                       await FilePicker.platform.pickFiles(
-                                          type: FileType.image,
-                                          allowedExtensions: [
-                                        'jpeg',
-                                        'png',
-                                        'jpg'
-                                      ]);
+                                    type: FileType.image,
+                                  );
 
                                   final platformFile = result!.files.first;
+
                                   image2.value =
                                       File.fromRawPath(platformFile.bytes!);
                                 },
@@ -200,7 +233,9 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
                                     context: context,
                                     builder: (context) => AlertDialog(
                                       title: const Text(
-                                          'Deseja remover a imagem?'),
+                                        'Deseja remover a imagem?',
+                                        style: TextStyle(color: Colors.black),
+                                      ),
                                       actions: [
                                         TextButton(
                                           onPressed: () => Modular.to.pop(),
@@ -214,7 +249,11 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
                                             image2.value = null;
                                             Modular.to.pop();
                                           },
-                                          child: const Text('Remover Imagem'),
+                                          child: const Text(
+                                            'Remover Imagem',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -235,11 +274,18 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
                                                 const Icon(
                                                     Icons.upload_rounded),
                                                 const Text(
-                                                    'Adiciona uma imagem.')
+                                                  'Adiciona uma imagem.',
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                )
                                               ]
                                             : [
                                                 const Icon(Icons.done),
-                                                const Text('Imagem Adicionado!')
+                                                const Text(
+                                                  'Imagem Adicionado!',
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                )
                                               ]),
                                   ),
                                 ),
@@ -249,49 +295,103 @@ class _OnboardingAddAdWebState extends State<OnboardingAddAdWeb> {
                     ),
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 50),
-                  child: Text('Coloque o tempo de duração em segundos'),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-                  child: SizedBox(
-                    width: 300,
-                    child: Form(
-                      key: _formKey,
-                      child: TextFormField(
-                        controller: secondsController,
-                        focusNode: secondsFocus,
-                        decoration: const InputDecoration(
-                          labelText: 'Duração ...',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(30),
+                if (logininteractor.user!.isAdm)
+                  const Padding(
+                    padding: EdgeInsets.only(top: 50),
+                    child: Text('Coloque o tempo de duração em segundos'),
+                  ),
+                if (logininteractor.user!.isAdm)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 10),
+                    child: SizedBox(
+                      width: 300,
+                      child: Form(
+                        key: _formKey,
+                        child: TextFormField(
+                          controller: secondsController,
+                          focusNode: secondsFocus,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          decoration: const InputDecoration(
+                            labelText: 'Duração ...',
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.deepPurple, width: 2.0),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.green, width: 2.0),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              ),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.red, width: 2.0),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              ),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.orange, width: 2.0),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
                 const Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 50),
                   child: ElevatedButton(
                     onPressed: () {
                       secondsFocus.unfocus();
-
-                      if (_formKey.currentState!.validate()) {
+                      if (logininteractor.user!.isAdm) {
+                        if (_formKey.currentState!.validate()) {
+                          if (hasTwoImages.value) {
+                            if (image.value != null && image2.value != null) {
+                              dashboardinteractor.addAD(
+                                  image: image.value!,
+                                  image2: image2.value!,
+                                  seconds: int.parse(secondsController.text));
+                            }
+                          } else {
+                            if (image.value != null) {
+                              dashboardinteractor.addAD(
+                                  image: image.value!,
+                                  seconds: int.parse(secondsController.text));
+                            }
+                          }
+                        }
+                      } else {
                         if (hasTwoImages.value) {
-                          dashboardinteractor.addAD(
-                              image: image.value!,
-                              image2: image2.value!,
-                              seconds: int.parse(secondsController.text));
+                          if (image.value != null && image2.value != null) {
+                            dashboardinteractor.addAD(
+                                image: image.value!,
+                                image2: image2.value!,
+                                seconds: 30);
+                          }
                         } else {
-                          dashboardinteractor.addAD(
-                              image: image.value!,
-                              seconds: int.parse(secondsController.text));
+                          if (image.value != null) {
+                            dashboardinteractor.addAD(
+                                image: image.value!, seconds: 30);
+                          }
                         }
                       }
                     },

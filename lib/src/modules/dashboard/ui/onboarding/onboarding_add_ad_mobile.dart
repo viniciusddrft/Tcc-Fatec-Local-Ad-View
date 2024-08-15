@@ -76,7 +76,9 @@ class _OnboardingAddAdMobileState extends State<OnboardingAddAdMobile> {
               } else if (dashboardinteractor.value is DashboardFailed) {
                 return Center(
                   child: Text(
-                      (dashboardinteractor.value as DashboardFailed).message),
+                    (dashboardinteractor.value as DashboardFailed).message,
+                    style: const TextStyle(color: Colors.black),
+                  ),
                 );
               } else {
                 return Column(

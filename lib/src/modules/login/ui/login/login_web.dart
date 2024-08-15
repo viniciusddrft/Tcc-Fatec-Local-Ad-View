@@ -17,6 +17,7 @@ class _LoginWebState extends State<LoginWeb> {
   final passwordController = TextEditingController();
   final _focusNodeEmail = FocusNode();
   final _focusNodePassword = FocusNode();
+  final _isObfuscatePassword = ValueNotifier<bool>(true);
 
   @override
   void initState() {
@@ -96,49 +97,66 @@ class _LoginWebState extends State<LoginWeb> {
                 padding: EdgeInsets.only(top: size.height * 0.05),
                 child: SizedBox(
                   width: size.width * 0.3,
-                  child: TextFormField(
-                    controller: passwordController,
-                    focusNode: _focusNodePassword,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    decoration: const InputDecoration(
-                      labelText: 'Senha',
-                      labelStyle: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.deepPurple, width: 2.0),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.green, width: 2.0),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.red, width: 2.0),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
-                      focusedErrorBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Colors.orange, width: 2.0),
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: ValueListenableBuilder(
+                      valueListenable: _isObfuscatePassword,
+                      builder: (context, _, child) {
+                        return TextFormField(
+                          controller: passwordController,
+                          focusNode: _focusNodePassword,
+                          obscureText: _isObfuscatePassword.value,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          decoration: InputDecoration(
+                            labelText: 'Senha',
+                            labelStyle: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.deepPurple, width: 2.0),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              ),
+                            ),
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.green, width: 2.0),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              ),
+                            ),
+                            errorBorder: const OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.red, width: 2.0),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              ),
+                            ),
+                            focusedErrorBorder: const OutlineInputBorder(
+                              borderSide:
+                                  BorderSide(color: Colors.orange, width: 2.0),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              ),
+                            ),
+                            suffixIcon: GestureDetector(
+                              onTap: () => _isObfuscatePassword.value =
+                                  !_isObfuscatePassword.value,
+                              child: Icon(
+                                _isObfuscatePassword.value
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
                 ),
               ),
               Padding(

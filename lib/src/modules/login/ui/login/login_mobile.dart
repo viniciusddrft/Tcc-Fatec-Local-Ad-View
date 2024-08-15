@@ -146,9 +146,12 @@ class _LoginMobileState extends State<LoginMobile> {
                         suffixIcon: GestureDetector(
                           onTap: () => _isObfuscatePassword.value =
                               !_isObfuscatePassword.value,
-                          child: Icon(_isObfuscatePassword.value
-                              ? Icons.visibility_off
-                              : Icons.visibility),
+                          child: Icon(
+                            _isObfuscatePassword.value
+                                ? Icons.visibility_off
+                                : Icons.visibility,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                       validator: (text) {

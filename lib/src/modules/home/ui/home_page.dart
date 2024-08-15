@@ -35,8 +35,8 @@ class _HomePageState extends State<HomePage> {
     return ValueListenableBuilder(
       valueListenable: homeinteractor,
       builder: (context, value, child) => switch (value) {
-        HomeLoading() => const CircularProgressIndicator(),
-        HomeInitial() => const CircularProgressIndicator(),
+        HomeLoading() => const Center(child: CircularProgressIndicator()),
+        HomeInitial() => const Center(child: CircularProgressIndicator()),
         HomeFailed() => const Center(child: Text('Erro')),
         HomeSuccess(ads: final List<AdEntity> ads) => AdWidget(ads: ads),
       },

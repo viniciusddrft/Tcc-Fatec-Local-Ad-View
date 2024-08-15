@@ -43,6 +43,7 @@ class _AdWidgetState extends State<AdWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: PageView(
         controller: _pageController,
         children: [

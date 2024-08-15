@@ -18,11 +18,10 @@ class LoginServiceImpl implements LoginServiceInterface {
       final users =
           await FirebaseFirestore.instance.collection('/users/').get();
 
-      for (QueryDocumentSnapshot doc in users.docs) {
-        if ((doc.data() as Map)['user'] == userCredential.user!.email) {
+      for (var doc in users.docs) {
+        if ((doc.data())['user'] == userCredential.user!.email) {
           return LoggedSuccess(UserEntity(
-              user: userCredential.user!.email!,
-              isAdm: (doc.data() as Map)['isAdm']));
+              user: userCredential.user!.email!, isAdm: (doc.data())['isAdm']));
         }
       }
 
@@ -89,10 +88,10 @@ class LoginServiceImpl implements LoginServiceInterface {
       final users =
           await FirebaseFirestore.instance.collection('/users/').get();
 
-      for (QueryDocumentSnapshot doc in users.docs) {
-        if ((doc.data() as Map)['user'] == user.email) {
-          return LoggedSuccess(UserEntity(
-              user: user.email!, isAdm: (doc.data() as Map)['isAdm']));
+      for (var doc in users.docs) {
+        if ((doc.data())['user'] == user.email) {
+          return LoggedSuccess(
+              UserEntity(user: user.email!, isAdm: (doc.data())['isAdm']));
         }
       }
       return const Disconnected();

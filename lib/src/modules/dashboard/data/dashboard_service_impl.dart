@@ -18,9 +18,9 @@ class DashboardServiceImpl implements DashboardServiceInterface {
 
       final List<AdEntity> listAds = [];
 
-      for (QueryDocumentSnapshot doc in ads.docs) {
-        listAds.add(AdAdpter.fromJson((doc.data() as Map<String, dynamic>)
-          ..addAll({'id': doc.reference.id})));
+      for (var doc in ads.docs) {
+        listAds.add(
+            AdAdpter.fromJson((doc.data())..addAll({'id': doc.reference.id})));
       }
 
       return DashboardLoadedAds(listAds);

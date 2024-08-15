@@ -15,8 +15,8 @@ class HomeServiceImpl implements HomeServiceInterface {
 
       final List<AdEntity> listAds = [];
 
-      for (QueryDocumentSnapshot doc in ads.docs) {
-        listAds.add(AdAdpter.fromJson(doc.data() as Map<String, dynamic>));
+      for (var doc in ads.docs) {
+        listAds.add(AdAdpter.fromJson(doc.data()));
       }
 
       return HomeSuccess(listAds);

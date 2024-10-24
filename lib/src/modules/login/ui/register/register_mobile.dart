@@ -303,7 +303,6 @@ class _RegisterMobileState extends State<RegisterMobile> {
   void dispose() {
     _passwordController.dispose();
     _emailController.dispose();
-    _loginInteractor.dispose();
     _tokenController.dispose();
     _focusNodeEmail.dispose();
     _focusNodePassword.dispose();

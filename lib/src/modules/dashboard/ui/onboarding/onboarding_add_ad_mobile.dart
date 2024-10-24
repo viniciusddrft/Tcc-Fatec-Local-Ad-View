@@ -312,8 +312,9 @@ class _OnboardingAddAdMobileState extends State<OnboardingAddAdMobile> {
                               fontSize: 14.0,
                               fontWeight: FontWeight.bold,
                             ),
+                            keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
-                              labelText: 'Duração ...',
+                              labelText: 'Duração(segundos) ...',
                               labelStyle: TextStyle(
                                 color: Colors.black,
                                 fontSize: 14.0,

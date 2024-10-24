@@ -12,14 +12,14 @@ class DashboardWeb extends StatefulWidget {
 }
 
 class _DashboardWebState extends State<DashboardWeb> {
-  final dashboardinteractor = Modular.get<DashboardInteractor>();
+  final dashboardInteractor = Modular.get<DashboardInteractor>();
   final logininteractor = Modular.get<Logininteractor>();
 
   @override
   void initState() {
-    dashboardinteractor.loadAds();
-    dashboardinteractor.addListener(() {
-      if (dashboardinteractor.value is DashboardRemoveAdSuccess) {
+    dashboardInteractor.loadAds();
+    dashboardInteractor.addListener(() {
+      if (dashboardInteractor.value is DashboardRemoveAdSuccess) {
         showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
@@ -34,7 +34,7 @@ class _DashboardWebState extends State<DashboardWeb> {
               );
             },
             backgroundColor: Colors.white);
-        dashboardinteractor.loadAds();
+        dashboardInteractor.loadAds();
       }
     });
     super.initState();
@@ -53,7 +53,7 @@ class _DashboardWebState extends State<DashboardWeb> {
         ],
       ),
       body: ValueListenableBuilder(
-        valueListenable: dashboardinteractor,
+        valueListenable: dashboardInteractor,
         builder: (context, value, child) {
           if (value is DashboardLoading) {
             return const Center(
@@ -92,7 +92,7 @@ class _DashboardWebState extends State<DashboardWeb> {
                             ),
                             TextButton(
                               onPressed: () {
-                                dashboardinteractor.removeAd(value.ads[index]);
+                                dashboardInteractor.removeAd(value.ads[index]);
                                 Modular.to.pop();
                               },
                               child: const Text('Remover Anúncio'),
@@ -186,7 +186,11 @@ class _DashboardWebState extends State<DashboardWeb> {
               ),
             );
           } else {
-            return Container();
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.deepPurple,
+              ),
+            );
           }
         },
       ),
@@ -203,7 +207,7 @@ class _DashboardWebState extends State<DashboardWeb> {
 
   @override
   void dispose() {
-    dashboardinteractor.dispose();
+    dashboardInteractor.dispose();
     super.dispose();
   }
 }

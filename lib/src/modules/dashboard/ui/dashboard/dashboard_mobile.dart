@@ -12,14 +12,14 @@ class DashboardMobile extends StatefulWidget {
 }
 
 class _DashboardMobileState extends State<DashboardMobile> {
-  final dashboardinteractor = Modular.get<DashboardInteractor>();
+  final dashboardInteractor = Modular.get<DashboardInteractor>();
   final logininteractor = Modular.get<Logininteractor>();
 
   @override
   void initState() {
-    dashboardinteractor.loadAds();
-    dashboardinteractor.addListener(() {
-      if (dashboardinteractor.value is DashboardRemoveAdSuccess) {
+    dashboardInteractor.loadAds();
+    dashboardInteractor.addListener(() {
+      if (dashboardInteractor.value is DashboardRemoveAdSuccess) {
         showModalBottomSheet<void>(
             context: context,
             builder: (BuildContext context) {
@@ -34,7 +34,7 @@ class _DashboardMobileState extends State<DashboardMobile> {
               );
             },
             backgroundColor: Colors.white);
-        dashboardinteractor.loadAds();
+        dashboardInteractor.loadAds();
       }
     });
     super.initState();
@@ -48,7 +48,7 @@ class _DashboardMobileState extends State<DashboardMobile> {
         title: const Text('Dashboard'),
       ),
       body: ValueListenableBuilder(
-        valueListenable: dashboardinteractor,
+        valueListenable: dashboardInteractor,
         builder: (_, value, __) {
           if (value is DashboardLoading) {
             return const Center(
@@ -61,7 +61,7 @@ class _DashboardMobileState extends State<DashboardMobile> {
           } else if (value is DashboardLoadedAds) {
             return RefreshIndicator(
               color: Colors.white,
-              onRefresh: () async => dashboardinteractor.loadAds(),
+              onRefresh: () async => dashboardInteractor.loadAds(),
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -92,7 +92,7 @@ class _DashboardMobileState extends State<DashboardMobile> {
                             ),
                             TextButton(
                               onPressed: () {
-                                dashboardinteractor.removeAd(value.ads[index]);
+                                dashboardInteractor.removeAd(value.ads[index]);
                                 Modular.to.pop();
                               },
                               child: const Text('Remover Anúncio'),
@@ -181,7 +181,11 @@ class _DashboardMobileState extends State<DashboardMobile> {
               ),
             );
           } else {
-            throw Exception('State invalid');
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.deepPurple,
+              ),
+            );
           }
         },
       ),
@@ -198,7 +202,7 @@ class _DashboardMobileState extends State<DashboardMobile> {
 
   @override
   void dispose() {
-    dashboardinteractor.dispose();
+    dashboardInteractor.dispose();
     super.dispose();
   }
 }
